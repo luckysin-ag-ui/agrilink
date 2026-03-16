@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — AgriLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-deep: #1a3a2a; --green-mid: #2d6a4f; --green-fresh: #52b788;
+      --green-light: #95d5b2; --cream: #f8f4ed; --cream-dark: #ede8df;
+      --white: #ffffff; --text-dark: #1a2e1e; --text-mid: #3d5a47;
+      --text-light: #6b8f74; --gold: #c9a84c; --red: #e05c5c;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); min-height:100vh; display:flex; flex-direction:column; }
+
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 60px; background:rgba(248,244,237,0.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(82,183,136,0.15); box-shadow:0 2px 20px rgba(26,58,42,0.06); }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-icon { width:38px; height:38px; background:var(--green-mid); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--green-deep); }
+    .logo-text span { color:var(--green-fresh); }
+    .nav-register { font-size:14px; color:var(--text-mid); text-decoration:none; }
+    .nav-register strong { color:var(--green-mid); }
+    .nav-register:hover strong { text-decoration:underline; }
+
+    /* LAYOUT */
+    .page-wrap { display:grid; grid-template-columns:1fr 1fr; min-height:100vh; padding-top:74px; }
+
+    /* LEFT — decorative */
+    .left-panel {
+      background:var(--green-deep);
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      padding:60px 48px; position:relative; overflow:hidden;
+    }
+    .left-panel::before { content:''; position:absolute; top:-100px; right:-100px; width:480px; height:480px; background:radial-gradient(circle,rgba(82,183,136,0.14) 0%,transparent 70%); }
+    .left-panel::after { content:''; position:absolute; bottom:-60px; left:-60px; width:280px; height:280px; background:radial-gradient(circle,rgba(149,213,178,0.08) 0%,transparent 70%); }
+
+    .left-inner { position:relative; z-index:1; width:100%; max-width:380px; }
+    .left-greeting { font-family:'Playfair Display',serif; font-size:38px; font-weight:700; color:var(--white); line-height:1.15; letter-spacing:-1px; margin-bottom:14px; }
+    .left-greeting em { font-style:normal; color:var(--green-fresh); }
+    .left-sub { font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:40px; }
+
+    /* Stats cards */
+    .stat-cards { display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
+    .stat-card {
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+      border-radius:14px; padding:16px 20px;
+      display:flex; align-items:center; gap:14px;
+      transition:transform 0.2s;
+    }
+    .stat-card:hover { transform:translateX(4px); }
+    .stat-card-icon { font-size:24px; width:44px; height:44px; background:rgba(82,183,136,0.15); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .stat-card-num { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--white); }
+    .stat-card-label { font-size:12px; color:rgba(255,255,255,0.5); margin-top:1px; }
+
+    /* Live activity feed */
+    .activity-feed { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px 20px; }
+    .feed-title { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .feed-dot { width:7px; height:7px; background:var(--green-fresh); border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+    .feed-items { display:flex; flex-direction:column; gap:10px; }
+    .feed-item { display:flex; align-items:center; gap:10px; font-size:13px; color:rgba(255,255,255,0.6); }
+    .feed-item-icon { font-size:16px; }
+    .feed-item strong { color:rgba(255,255,255,0.85); }
+
+    /* RIGHT — login form */
+    .right-panel { display:flex; align-items:center; justify-content:center; padding:50px 60px; }
+    .form-box { width:100%; max-width:420px; }
+
+    .form-header { margin-bottom:32px; }
+    .form-title { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--green-deep); margin-bottom:8px; }
+    .form-sub { font-size:15px; color:var(--text-light); }
+    .form-sub a { color:var(--green-mid); text-decoration:none; font-weight:500; }
+
+    /* Role tabs */
+    .role-tabs { display:flex; background:var(--cream-dark); border-radius:12px; padding:4px; margin-bottom:28px; }
+    .role-tab {
+      flex:1; padding:11px; border:none; background:transparent;
+      border-radius:9px; font-size:14px; font-weight:500;
+      color:var(--text-light); cursor:pointer; font-family:'DM Sans',sans-serif;
+      transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .role-tab.active { background:var(--white); color:var(--green-mid); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+
+    .form-group { margin-bottom:18px; }
+    .form-label { font-size:13px; font-weight:500; color:var(--text-dark); display:block; margin-bottom:6px; }
+    .input-wrap { position:relative; }
+    .input-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; pointer-events:none; }
+    .form-input {
+      width:100%; padding:13px 14px 13px 42px;
+      border:1.5px solid var(--cream-dark); border-radius:10px;
+      font-size:14px; font-family:'DM Sans',sans-serif;
+      color:var(--text-dark); outline:none; background:var(--white);
+      transition:border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus { border-color:var(--green-fresh); box-shadow:0 0 0 3px rgba(82,183,136,0.12); }
+    .form-input::placeholder { color:var(--text-light); }
+    .password-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+    .forgot-link { font-size:13px; color:var(--green-mid); text-decoration:none; }
+    .forgot-link:hover { text-decoration:underline; }
+    .pwd-toggle { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:16px; color:var(--text-light); }
+
+    /* OTP input group */
+    .otp-wrap { display:flex; gap:10px; margin-top:6px; }
+    .otp-input {
+      flex:1; padding:14px 0; text-align:center;
+      border:1.5px solid var(--cream-dark); border-radius:10px;
+      font-size:20px; font-weight:600; font-family:'DM Sans',sans-serif;
+      color:var(--text-dark); outline:none; background:var(--white);
+      transition:border-color 0.2s;
+    }
+    .otp-input:focus { border-color:var(--green-fresh); }
+
+    /* remember me */
+    .remember-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+    .remember-check { display:flex; align-items:center; gap:8px; cursor:pointer; }
+    .remember-check input { accent-color:var(--green-mid); }
+    .remember-label { font-size:13px; color:var(--text-mid); }
+
+    .btn-login {
+      width:100%; padding:15px; background:var(--green-mid); color:var(--white);
+      border:none; border-radius:12px; font-size:16px; font-weight:500;
+      cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+    .btn-login:hover { background:var(--green-deep); transform:translateY(-1px); box-shadow:0 8px 24px rgba(45,106,79,0.25); }
+    .btn-login.loading { opacity:0.7; pointer-events:none; }
+
+    .divider { display:flex; align-items:center; gap:12px; margin:22px 0; }
+    .divider-line { flex:1; height:1px; background:var(--cream-dark); }
+    .divider-text { font-size:13px; color:var(--text-light); }
+
+    .btn-otp {
+      width:100%; padding:14px; background:var(--white); color:var(--green-mid);
+      border:1.5px solid var(--green-mid); border-radius:12px;
+      font-size:15px; font-weight:500; cursor:pointer;
+      font-family:'DM Sans',sans-serif; transition:all 0.2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .btn-otp:hover { background:rgba(82,183,136,0.06); }
+
+    .signup-prompt { text-align:center; margin-top:24px; font-size:14px; color:var(--text-light); }
+    .signup-prompt a { color:var(--green-mid); text-decoration:none; font-weight:500; }
+
+    /* OTP Screen */
+    .otp-screen { display:none; }
+    .otp-screen.active { display:block; animation:fadeIn 0.3s ease; }
+    .email-screen { display:block; }
+    .email-screen.hidden { display:none; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    .otp-info { background:rgba(82,183,136,0.08); border:1px solid rgba(82,183,136,0.2); border-radius:12px; padding:14px 18px; font-size:14px; color:var(--text-mid); margin-bottom:22px; display:flex; align-items:center; gap:10px; }
+    .resend-row { text-align:center; margin-top:14px; font-size:13px; color:var(--text-light); }
+    .resend-link { color:var(--green-mid); cursor:pointer; font-weight:500; }
+    .resend-link:hover { text-decoration:underline; }
+
+    /* Success */
+    .login-success { display:none; text-align:center; padding:20px 0; }
+    .login-success.active { display:block; animation:fadeIn 0.5s ease; }
+    .success-icon { font-size:60px; margin-bottom:16px; }
+    .success-title { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--green-deep); margin-bottom:10px; }
+    .success-sub { font-size:15px; color:var(--text-mid); margin-bottom:24px; line-height:1.6; }
+    .btn-go-dash { display:block; padding:15px; background:var(--green-mid); color:white; border:none; border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; transition:background 0.2s; }
+    .btn-go-dash:hover { background:var(--green-deep); }
+
+    /* Error */
+    .error-msg { background:rgba(224,92,92,0.08); border:1px solid rgba(224,92,92,0.2); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--red); margin-bottom:14px; display:none; }
+    .error-msg.show { display:block; animation:fadeIn 0.2s ease; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🌾</div>
+    <span class="logo-text">Agri<span>Link</span></span>
+  </a>
+  <a href="register.html" class="nav-register">New to AgriLink? <strong>Create Account →</strong></a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="left-inner">
+      <div class="left-greeting">Welcome <em>back</em> to AgriLink 🌾</div>
+      <div class="left-sub">Thousands of farmers and industries are connecting right now. Log in to see what's new.</div>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-icon">📋</div>
+          <div>
+            <div class="stat-card-num">384</div>
+            <div class="stat-card-label">Open contracts waiting for farmers</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🤝</div>
+          <div>
+            <div class="stat-card-num">1,240</div>
+            <div class="stat-card-label">Successful deals this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">💰</div>
+          <div>
+            <div class="stat-card-num">₹4.2 Cr</div>
+            <div class="stat-card-label">Paid to farmers this month</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-feed">
+        <div class="feed-title"><span class="feed-dot"></span> Live Activity</div>
+        <div class="feed-items" id="feedItems">
+          <div class="feed-item"><span class="feed-item-icon">✅</span><span><strong>Ravi Kumar</strong> got selected for Wheat contract</span></div>
+          <div class="feed-item"><span class="feed-item-icon">📋</span><span><strong>ITC Foods</strong> posted a new Tomato contract</span></div>
+          <div class="feed-item"><span class="feed-item-icon">💬</span><span><strong>Priya Sharma</strong> started a negotiation</span></div>
+          <div class="feed-item"><span class="feed-item-icon">🌾</span><span><strong>Tata Foods</strong> is looking for Tea farmers</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="form-box">
+
+      <!-- Role Tabs -->
+      <div class="role-tabs" id="roleTabs">
+        <button class="role-tab active" onclick="setRole('farmer', this)">🌱 Farmer</button>
+        <button class="role-tab" onclick="setRole('industry', this)">🏭 Industry</button>
+      </div>
+
+      <!-- EMAIL/PASSWORD SCREEN -->
+      <div class="email-screen" id="emailScreen">
+        <div class="form-header">
+          <div class="form-title" id="loginTitle">Farmer Login</div>
+          <div class="form-sub">Don't have an account? <a href="register.html">Register free</a></div>
+        </div>
+
+        <div class="error-msg" id="errorMsg">⚠️ Invalid mobile number or password. Please try again.</div>
+
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <div class="input-wrap">
+            <span class="input-icon">📱</span>
+            <input type="tel" class="form-input" id="mobileInput" placeholder="+91 98765 43210"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="password-row">
+            <label class="form-label" style="margin:0">Password</label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" class="form-input" id="pwdInput" placeholder="Enter your password"/>
+            <button class="pwd-toggle" onclick="togglePwd()">👁️</button>
+          </div>
+        </div>
+
+        <div class="remember-row">
+          <label class="remember-check">
+            <input type="checkbox" checked/>
+            <span class="remember-label">Keep me logged in</span>
+          </label>
+        </div>
+
+        <button class="btn-login" id="loginBtn" onclick="doLogin()">
+          <span id="loginBtnText">Login to AgriLink</span>
+        </button>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-text">or login with OTP</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <button class="btn-otp" onclick="showOtp()">
+          📱 Send OTP to Mobile
+        </button>
+
+        <div class="signup-prompt">
+          New to AgriLink? <a href="register.html">Create a free account →</a>
+        </div>
+      </div>
+
+      <!-- OTP SCREEN -->
+      <div class="otp-screen" id="otpScreen">
+        <div class="form-header">
+          <div class="form-title">Enter OTP</div>
+          <div class="form-sub">We sent a 4-digit code to your mobile</div>
+        </div>
+
+        <div class="otp-info">
+          📱 OTP sent to <strong id="otpPhone">+91 98765 43210</strong>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Enter 4-digit OTP</label>
+          <div class="otp-wrap">
+            <input type="text" class="otp-input" maxlength="1" oninput="moveOtp(this,1)"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="moveOtp(this,2)"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="moveOtp(this,3)"/>
+            <input type="text" class="otp-input" maxlength="1" oninput="moveOtp(this,4)"/>
+          </div>
+          <div class="resend-row">Didn't get the OTP? <span class="resend-link" onclick="resendOtp()">Resend OTP</span></div>
+        </div>
+
+        <button class="btn-login" onclick="verifyOtp()">Verify & Login →</button>
+        <button style="width:100%;padding:13px;background:transparent;color:var(--text-mid);border:1.5px solid var(--cream-dark);border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;transition:all 0.2s" onclick="backToLogin()">← Back to Login</button>
+      </div>
+
+      <!-- SUCCESS SCREEN -->
+      <div class="login-success" id="loginSuccess">
+        <div class="success-icon">👋</div>
+        <div class="success-title" id="successTitle">Welcome back!</div>
+        <div class="success-sub" id="successSub">You're now logged in. Redirecting you to your dashboard...</div>
+        <a href="dashboard-farmer.html" class="btn-go-dash" id="dashLink">Go to My Dashboard →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentRole = 'farmer';
+
+  function setRole(role, btn) {
+    currentRole = role;
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('loginTitle').textContent = role === 'farmer' ? 'Farmer Login' : 'Industry Login';
+  }
+
+  function togglePwd() {
+    const inp = document.getElementById('pwdInput');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  function doLogin() {
+    const mobile = document.getElementById('mobileInput').value.trim();
+    const pwd = document.getElementById('pwdInput').value.trim();
+    const err = document.getElementById('errorMsg');
+
+    if (!mobile || !pwd) {
+      err.textContent = '⚠️ Please enter your mobile number and password.';
+      err.classList.add('show'); return;
+    }
+    err.classList.remove('show');
+
+    const btn = document.getElementById('loginBtn');
+    btn.classList.add('loading');
+    document.getElementById('loginBtnText').textContent = 'Logging in...';
+
+    // Simulate login
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.getElementById('loginBtnText').textContent = 'Login to AgriLink';
+      showSuccess();
+    }, 1500);
+  }
+
+  function showOtp() {
+    const mobile = document.getElementById('mobileInput').value.trim();
+    document.getElementById('otpPhone').textContent = mobile || '+91 XXXXX XXXXX';
+    document.getElementById('emailScreen').classList.add('hidden');
+    document.getElementById('otpScreen').classList.add('active');
+  }
+
+  function backToLogin() {
+    document.getElementById('emailScreen').classList.remove('hidden');
+    document.getElementById('otpScreen').classList.remove('active');
+  }
+
+  function moveOtp(el, idx) {
+    el.value = el.value.replace(/[^0-9]/g, '');
+    if (el.value && idx < 4) {
+      const inputs = document.querySelectorAll('.otp-input');
+      inputs[idx].focus();
+    }
+    // Auto verify if all 4 filled
+    const inputs = document.querySelectorAll('.otp-input');
+    const filled = [...inputs].every(i => i.value.length === 1);
+    if (filled) setTimeout(verifyOtp, 300);
+  }
+
+  function verifyOtp() {
+    const inputs = document.querySelectorAll('.otp-input');
+    const otp = [...inputs].map(i => i.value).join('');
+    if (otp.length < 4) { alert('Please enter the complete 4-digit OTP.'); return; }
+    showSuccess();
+  }
+
+  function resendOtp() {
+    const inputs = document.querySelectorAll('.otp-input');
+    inputs.forEach(i => i.value = '');
+    inputs[0].focus();
+    alert('A new OTP has been sent to your mobile number.');
+  }
+
+  function showSuccess() {
+    document.getElementById('emailScreen').classList.add('hidden');
+    document.getElementById('otpScreen').classList.remove('active');
+
+    const success = document.getElementById('loginSuccess');
+    success.classList.add('active');
+    document.getElementById('roleTabs').style.display = 'none';
+
+    if (currentRole === 'farmer') {
+      document.getElementById('successTitle').textContent = '👋 Welcome back, Farmer!';
+      document.getElementById('successSub').textContent = 'You have 3 new contract matches and 1 message waiting for you.';
+      document.getElementById('dashLink').href = 'dashboard-farmer.html';
+      document.getElementById('dashLink').textContent = 'Go to Farmer Dashboard →';
+    } else {
+      document.getElementById('successTitle').textContent = '👋 Welcome back!';
+      document.getElementById('successSub').textContent = 'You have 8 new farmer applications and 2 messages waiting for you.';
+      document.getElementById('dashLink').href = 'dashboard-industry.html';
+      document.getElementById('dashLink').textContent = 'Go to Industry Dashboard →';
+    }
+  }
+
+  // Animate live feed
+  const feedMessages = [
+    ['✅','<strong>Ravi Kumar</strong> got selected for Wheat contract'],
+    ['📋','<strong>ITC Foods</strong> posted a new Tomato contract'],
+    ['💬','<strong>Priya Sharma</strong> started a negotiation'],
+    ['🌾','<strong>Tata Foods</strong> is looking for Tea farmers'],
+    ['🤝','<strong>Sunita Devi</strong> accepted a Potato contract'],
+    ['📦','<strong>PepsiCo</strong> confirmed delivery from 3 farmers'],
+    ['🆕','<strong>Amul</strong> posted a new Sugarcane requirement'],
+    ['💰','<strong>Mohan Lal</strong> received ₹48,000 payment'],
+  ];
+  let feedIdx = 4;
+  setInterval(() => {
+    const items = document.getElementById('feedItems');
+    const msg = feedMessages[feedIdx % feedMessages.length];
+    const newItem = document.createElement('div');
+    newItem.className = 'feed-item';
+    newItem.style.opacity = '0';
+    newItem.style.transition = 'opacity 0.5s';
+    newItem.innerHTML = `<span class="feed-item-icon">${msg[0]}</span><span>${msg[1]}</span>`;
+    items.insertBefore(newItem, items.firstChild);
+    setTimeout(() => newItem.style.opacity = '1', 50);
+    if (items.children.length > 4) items.removeChild(items.lastChild);
+    feedIdx++;
+  }, 3000);
+</script>
+</body>
+</html>

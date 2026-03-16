@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — AgriLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-deep:#1a3a2a; --green-mid:#2d6a4f; --green-fresh:#52b788;
+      --green-light:#95d5b2; --cream:#f8f4ed; --cream-dark:#ede8df;
+      --white:#ffffff; --text-dark:#1a2e1e; --text-mid:#3d5a47;
+      --text-light:#6b8f74; --gold:#c9a84c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(248,244,237,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(82,183,136,0.15);box-shadow:0 2px 20px rgba(26,58,42,0.06);}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-icon{width:38px;height:38px;background:var(--green-mid);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .logo-text{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--green-deep);}
+    .logo-text span{color:var(--green-fresh);}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text-mid);transition:color 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--green-mid);}
+    .nav-cta{display:flex;gap:12px;}
+    .btn-outline{padding:9px 22px;border:1.5px solid var(--green-mid);border-radius:8px;background:transparent;color:var(--green-mid);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+    .btn-outline:hover{background:var(--green-mid);color:var(--white);}
+    .btn-solid{padding:9px 22px;border:none;border-radius:8px;background:var(--green-mid);color:var(--white);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+    .btn-solid:hover{background:var(--green-deep);}
+
+    /* HERO */
+    .hero{margin-top:74px;background:var(--green-deep);padding:100px 60px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(82,183,136,0.14) 0%,transparent 70%);}
+    .hero::after{content:'';position:absolute;bottom:-60px;left:200px;width:300px;height:300px;background:radial-gradient(circle,rgba(149,213,178,0.06) 0%,transparent 70%);}
+    .hero-content{position:relative;z-index:1;}
+    .hero-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-light);margin-bottom:16px;}
+    .hero-title{font-family:'Playfair Display',serif;font-size:clamp(40px,5vw,64px);font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-2px;margin-bottom:20px;}
+    .hero-title em{font-style:normal;color:var(--green-fresh);}
+    .hero-desc{font-size:17px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:36px;}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .hero-stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:18px 20px;}
+    .hero-stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--white);}
+    .hero-stat-label{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;}
+    .hero-image{position:relative;z-index:1;}
+    .hero-img-placeholder{border-radius:24px;background:rgba(255,255,255,0.05);border:2px dashed rgba(255,255,255,0.15);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:rgba(255,255,255,0.3);font-size:14px;}
+    .placeholder-icon{font-size:56px;opacity:0.3;}
+    .floating-tag{position:absolute;background:var(--white);border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,0.15);display:flex;align-items:center;gap:10px;}
+    .floating-tag.tag1{bottom:-16px;left:-24px;}
+    .floating-tag.tag2{top:-16px;right:-16px;}
+    .tag-icon{font-size:22px;}
+    .tag-text{font-size:13px;font-weight:600;color:var(--text-dark);}
+    .tag-sub{font-size:11px;color:var(--text-light);}
+
+    /* STORY */
+    .story-section{padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .story-img{border-radius:24px;background:linear-gradient(135deg,rgba(45,106,79,0.06),rgba(82,183,136,0.12));border:2px dashed rgba(82,183,136,0.25);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--text-light);font-size:14px;}
+    .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-fresh);margin-bottom:12px;}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,44px);font-weight:700;color:var(--green-deep);line-height:1.15;letter-spacing:-1px;margin-bottom:16px;}
+    .section-sub{font-size:16px;color:var(--text-mid);line-height:1.8;}
+    .story-points{display:flex;flex-direction:column;gap:20px;margin-top:28px;}
+    .story-point{display:flex;gap:14px;align-items:flex-start;}
+    .point-dot{width:10px;height:10px;border-radius:50%;background:var(--green-fresh);margin-top:6px;flex-shrink:0;}
+    .point-text{font-size:15px;color:var(--text-mid);line-height:1.7;}
+    .point-text strong{color:var(--text-dark);}
+
+    /* MISSION / VALUES */
+    .values-section{background:var(--green-deep);padding:100px 60px;}
+    .values-header{text-align:center;margin-bottom:64px;}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .value-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:36px 28px;transition:all 0.3s;text-align:center;}
+    .value-card:hover{background:rgba(255,255,255,0.09);transform:translateY(-4px);border-color:rgba(82,183,136,0.3);}
+    .value-icon{font-size:40px;margin-bottom:18px;display:block;}
+    .value-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:12px;}
+    .value-desc{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.8;}
+
+    /* PROBLEM WE SOLVE */
+    .problem-section{padding:100px 60px;}
+    .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:60px;}
+    .problem-col-title{font-size:16px;font-weight:600;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+    .problem-items{display:flex;flex-direction:column;gap:14px;}
+    .problem-item{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;}
+    .problem-item.bad{background:rgba(224,92,92,0.06);border:1px solid rgba(224,92,92,0.12);}
+    .problem-item.good{background:rgba(82,183,136,0.06);border:1px solid rgba(82,183,136,0.15);}
+    .problem-item-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+    .problem-item-text{font-size:14px;color:var(--text-mid);line-height:1.6;}
+    .problem-item-text strong{color:var(--text-dark);display:block;margin-bottom:2px;}
+
+    /* TEAM */
+    .team-section{padding:100px 60px;background:var(--cream-dark);}
+    .team-header{text-align:center;margin-bottom:56px;}
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+    .team-card{background:var(--white);border-radius:20px;padding:28px 24px;text-align:center;border:1px solid rgba(82,183,136,0.08);transition:all 0.25s;}
+    .team-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,58,42,0.1);border-color:var(--green-light);}
+    .team-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:36px;}
+    .team-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--green-deep);margin-bottom:6px;}
+    .team-role{font-size:13px;color:var(--text-light);margin-bottom:12px;}
+    .team-bio{font-size:13px;color:var(--text-mid);line-height:1.6;}
+
+    /* IMPACT / FUTURE */
+    .future-section{padding:100px 60px;}
+    .future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+    .future-card{background:var(--white);border-radius:18px;padding:28px;border:1px solid var(--cream-dark);position:relative;overflow:hidden;transition:all 0.25s;}
+    .future-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(26,58,42,0.08);}
+    .future-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+    .future-card.color1::before{background:linear-gradient(90deg,var(--green-fresh),var(--green-light));}
+    .future-card.color2::before{background:linear-gradient(90deg,var(--gold),#e8c06a);}
+    .future-card.color3::before{background:linear-gradient(90deg,#6bb5e8,#95d5b2);}
+    .future-tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--green-fresh);margin-bottom:12px;}
+    .future-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green-deep);margin-bottom:10px;}
+    .future-desc{font-size:14px;color:var(--text-mid);line-height:1.7;}
+    .future-icon{font-size:36px;margin-bottom:16px;display:block;}
+
+    /* PRESS / TRUST */
+    .trust-section{background:var(--green-deep);padding:60px;}
+    .trust-label{text-align:center;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);margin-bottom:32px;}
+    .trust-logos{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;}
+    .trust-logo{font-size:16px;font-weight:700;color:rgba(255,255,255,0.25);letter-spacing:1px;transition:color 0.2s;}
+    .trust-logo:hover{color:rgba(255,255,255,0.5);}
+
+    /* CTA */
+    .cta-section{margin:80px 60px;background:var(--green-mid);border-radius:28px;padding:80px;text-align:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);}
+    .cta-title{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--white);letter-spacing:-1px;margin-bottom:14px;position:relative;z-index:1;}
+    .cta-sub{font-size:17px;color:rgba(255,255,255,0.7);max-width:520px;margin:0 auto 36px;line-height:1.7;position:relative;z-index:1;}
+    .cta-btns{display:flex;gap:14px;justify-content:center;position:relative;z-index:1;}
+    .btn-cta-white{padding:16px 36px;background:var(--white);color:var(--green-deep);border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .btn-cta-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15);}
+    .btn-cta-ghost{padding:16px 36px;background:rgba(255,255,255,0.12);color:var(--white);border:1.5px solid rgba(255,255,255,0.25);border-radius:12px;font-size:16px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .btn-cta-ghost:hover{background:rgba(255,255,255,0.2);}
+
+    /* FOOTER */
+    footer{background:var(--green-deep);padding:60px 60px 30px;}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08);}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-top:14px;max-width:260px;}
+    .footer-col-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:16px;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .footer-links a{font-size:14px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--green-light);}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;font-size:13px;color:rgba(255,255,255,0.4);}
+
+    /* CHATBOT */
+    .chatbot-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:56px;height:56px;background:var(--green-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 30px rgba(45,106,79,0.4);transition:all 0.3s;border:none;font-size:24px;}
+    .chatbot-fab:hover{transform:scale(1.08);background:var(--green-deep);}
+    .chatbot-panel{position:fixed;bottom:96px;right:28px;z-index:998;width:360px;background:var(--white);border-radius:20px;box-shadow:0 20px 60px rgba(26,58,42,0.18);border:1px solid rgba(82,183,136,0.15);overflow:hidden;display:none;flex-direction:column;max-height:500px;}
+    .chatbot-panel.open{display:flex;}
+    .chat-header{background:var(--green-mid);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+    .chat-header-info{display:flex;align-items:center;gap:10px;}
+    .chat-avatar{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .chat-name{font-size:15px;font-weight:600;color:var(--white);}
+    .chat-status{font-size:12px;color:rgba(255,255,255,0.7);}
+    .chat-close-btn{background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;}
+    .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
+    .msg{max-width:85%;}
+    .msg.bot{align-self:flex-start;}
+    .msg.user{align-self:flex-end;}
+    .msg-bubble{padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;}
+    .msg.bot .msg-bubble{background:var(--cream);color:var(--text-dark);border-bottom-left-radius:4px;}
+    .msg.user .msg-bubble{background:var(--green-mid);color:var(--white);border-bottom-right-radius:4px;}
+    .chat-input-wrap{padding:12px 16px;border-top:1px solid var(--cream-dark);display:flex;gap:8px;}
+    .chat-input{flex:1;padding:10px 14px;border:1.5px solid var(--cream-dark);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+    .chat-input:focus{border-color:var(--green-light);}
+    .chat-send{width:40px;height:40px;background:var(--green-mid);border:none;border-radius:10px;color:var(--white);font-size:16px;cursor:pointer;}
+    .typing{display:flex;gap:4px;align-items:center;}
+    .typing span{width:7px;height:7px;background:var(--text-light);border-radius:50%;animation:bounce 1.2s infinite;}
+    .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .hero-content>*{animation:fadeUp 0.6s ease both;}
+    .hero-content>*:nth-child(2){animation-delay:0.1s}
+    .hero-content>*:nth-child(3){animation-delay:0.2s}
+    .hero-content>*:nth-child(4){animation-delay:0.3s}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🌾</div>
+    <span class="logo-text">Agri<span>Link</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="register.html" class="btn-solid">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Our Story</div>
+    <div class="hero-title">Built for India's <em>Forgotten</em> Farmers</div>
+    <div class="hero-desc">AgriLink was born from a simple question — why do farmers who feed millions still earn the least? We're here to change that, one contract at a time.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">2,400+</div><div class="hero-stat-label">Farmers Registered</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">₹4.2 Cr</div><div class="hero-stat-label">Paid to Farmers</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">18</div><div class="hero-stat-label">States Covered</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">142</div><div class="hero-stat-label">Industry Partners</div></div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-img-placeholder">
+      <span class="placeholder-icon">🌾</span>
+      <span>Hero Image Placeholder</span>
+    </div>
+    <div class="floating-tag tag1">
+      <span class="tag-icon">✅</span>
+      <div><div class="tag-text">No Middlemen</div><div class="tag-sub">Direct farmer-industry deals</div></div>
+    </div>
+    <div class="floating-tag tag2">
+      <span class="tag-icon">🤝</span>
+      <div><div class="tag-text">1,240 Deals</div><div class="tag-sub">Completed this month</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="story-section">
+  <div class="story-img">
+    <span style="font-size:52px;opacity:0.3">👨‍🌾</span>
+    <span>Farmer Image Placeholder</span>
+  </div>
+  <div>
+    <div class="section-label">The Problem We Saw</div>
+    <div class="section-title">India's Farmers Deserved Better</div>
+    <div class="section-sub">India has over 140 million farming families. Yet most of them have no idea who will buy their crop, at what price, or when they'll get paid — until it's too late.</div>
+    <div class="story-points">
+      <div class="story-point">
+        <div class="point-dot"></div>
+        <div class="point-text"><strong>Farmers receive only 20–30%</strong> of the final consumer price because of multiple middlemen taking commission at every step.</div>
+      </div>
+      <div class="story-point">
+        <div class="point-dot"></div>
+        <div class="point-text"><strong>No price certainty before planting.</strong> Farmers grow crops without knowing if a buyer exists, leading to massive losses at harvest.</div>
+      </div>
+      <div class="story-point">
+        <div class="point-dot"></div>
+        <div class="point-text"><strong>Industries struggle too.</strong> Food companies can't find reliable, quality-consistent farmers — leading to supply chain gaps and price volatility.</div>
+      </div>
+      <div class="story-point">
+        <div class="point-dot"></div>
+        <div class="point-text"><strong>Northeast India is especially underserved.</strong> Farmers in Assam, Manipur and Meghalaya have incredible produce but almost no direct market access.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-section">
+  <div class="values-header">
+    <div class="section-label" style="color:var(--green-light)">What Drives Us</div>
+    <div class="section-title" style="color:var(--white);max-width:500px;margin:0 auto 14px">Our Core Values</div>
+    <div class="section-sub" style="color:rgba(255,255,255,0.55);text-align:center;max-width:500px;margin:0 auto">Everything we build is guided by these principles.</div>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-icon">⚖️</span>
+      <div class="value-title">Fairness First</div>
+      <div class="value-desc">Every farmer deserves a fair price. We eliminate hidden margins and ensure transparent pricing between all parties on our platform.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🔍</span>
+      <div class="value-title">Full Transparency</div>
+      <div class="value-desc">All contract terms, prices and quality requirements are visible to both parties before any agreement is signed. No surprises.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🤝</span>
+      <div class="value-title">Trust Through Technology</div>
+      <div class="value-desc">Digital contracts, payment escrow and verified profiles create a foundation of trust that traditional agricultural trade has always lacked.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🌱</span>
+      <div class="value-title">Farmer First</div>
+      <div class="value-desc">Every feature we build starts with one question: does this make a farmer's life better? The platform will always be free for farmers.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🇮🇳</span>
+      <div class="value-title">Built for India</div>
+      <div class="value-desc">From multi-language support to mobile-first design, AgriLink is built specifically for the realities of Indian agriculture and farming communities.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🚀</span>
+      <div class="value-title">Innovation with Purpose</div>
+      <div class="value-desc">We use AI and technology not for its own sake, but because it genuinely helps farmers make better decisions and earn more from their hard work.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM WE SOLVE -->
+<div class="problem-section">
+  <div style="text-align:center;margin-bottom:8px">
+    <div class="section-label">Before vs After AgriLink</div>
+    <div class="section-title" style="max-width:560px;margin:0 auto">The Reality We're Changing</div>
+  </div>
+  <div class="problem-grid">
+    <div>
+      <div class="problem-col-title" style="color:var(--red)">❌ Before AgriLink</div>
+      <div class="problem-items">
+        <div class="problem-item bad"><span class="problem-item-icon">😔</span><div class="problem-item-text"><strong>No price certainty</strong>Farmers plant crops without knowing the selling price. Often forced to sell below cost at harvest.</div></div>
+        <div class="problem-item bad"><span class="problem-item-icon">🤐</span><div class="problem-item-text"><strong>Multiple middlemen</strong>Farmers keep only 20–30% of the final price after agents, commission traders and market fees.</div></div>
+        <div class="problem-item bad"><span class="problem-item-icon">💸</span><div class="problem-item-text"><strong>Delayed & disputed payments</strong>Verbal agreements with no legal protection. Payments take weeks or are never received.</div></div>
+        <div class="problem-item bad"><span class="problem-item-icon">🗺️</span><div class="problem-item-text"><strong>Limited market access</strong>Farmers sell only to local buyers. No visibility into national demand or better prices elsewhere.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="problem-col-title" style="color:var(--green-mid)">✅ After AgriLink</div>
+      <div class="problem-items">
+        <div class="problem-item good"><span class="problem-item-icon">📋</span><div class="problem-item-text"><strong>Pre-agreed contract price</strong>Farmers know the exact price before planting. Plan with confidence and grow for guaranteed buyers.</div></div>
+        <div class="problem-item good"><span class="problem-item-icon">🎯</span><div class="problem-item-text"><strong>Zero middlemen</strong>Farmers deal directly with food companies. Keep up to 80% more profit from every transaction.</div></div>
+        <div class="problem-item good"><span class="problem-item-icon">🔒</span><div class="problem-item-text"><strong>Guaranteed payment in 48 hrs</strong>Payment escrow holds funds before delivery. Automatic release on delivery confirmation.</div></div>
+        <div class="problem-item good"><span class="problem-item-icon">🌍</span><div class="problem-item-text"><strong>National market reach</strong>Connect with industries across India. Access demand from 18 states with a single profile.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="team-section">
+  <div class="team-header">
+    <div class="section-label" style="text-align:center">The People Behind AgriLink</div>
+    <div class="section-title" style="text-align:center">Meet the Team</div>
+    <div class="section-sub" style="text-align:center;max-width:500px;margin:14px auto 0">A passionate team of technologists, agricultural experts and social entrepreneurs from Northeast India and beyond.</div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:rgba(82,183,136,0.12)">👨‍💻</div>
+      <div class="team-name">Akash</div>
+      <div class="team-role">Founder & CEO</div>
+      <div class="team-bio">Visionary from Manipur with a passion for using technology to solve real problems for Indian farmers.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:rgba(201,168,76,0.12)">👩‍💼</div>
+      <div class="team-name">Priya Sharma</div>
+      <div class="team-role">Head of Operations</div>
+      <div class="team-bio">Agricultural supply chain expert with 8 years of experience working with farmer cooperatives across India.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:rgba(59,130,246,0.1)">👨‍🔬</div>
+      <div class="team-name">Rahul Nath</div>
+      <div class="team-role">Lead Engineer</div>
+      <div class="team-bio">Full-stack developer and AI specialist building the technology backbone of AgriLink's marketplace.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:rgba(224,92,92,0.1)">👩‍🌾</div>
+      <div class="team-name">Meena Devi</div>
+      <div class="team-role">Farmer Relations</div>
+      <div class="team-bio">Former farmer from Assam who now helps other farmers navigate contracts and maximize their earnings on the platform.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FUTURE ROADMAP -->
+<div class="future-section">
+  <div style="text-align:center">
+    <div class="section-label">What's Coming</div>
+    <div class="section-title" style="max-width:520px;margin:0 auto">Our Vision for the Future</div>
+    <div class="section-sub" style="text-align:center;max-width:500px;margin:14px auto 0">AgriLink is just getting started. Here's what we're building next.</div>
+  </div>
+  <div class="future-grid">
+    <div class="future-card color1">
+      <span class="future-icon">🤖</span>
+      <div class="future-tag">Coming Soon</div>
+      <div class="future-title">AI Crop Demand Forecasting</div>
+      <div class="future-desc">Predict which crops will be in high demand 6–12 months ahead, helping farmers plan what to grow before planting season.</div>
+    </div>
+    <div class="future-card color2">
+      <span class="future-icon">🌦️</span>
+      <div class="future-tag">In Development</div>
+      <div class="future-title">Weather Alerts for Farmers</div>
+      <div class="future-desc">Real-time weather alerts and crop-specific advice to help farmers protect their harvest and meet contract quality requirements.</div>
+    </div>
+    <div class="future-card color3">
+      <span class="future-icon">🌍</span>
+      <div class="future-tag">Planned</div>
+      <div class="future-title">Global Export Marketplace</div>
+      <div class="future-desc">Connect Indian farmers directly with international buyers in the Middle East, Southeast Asia and Europe for export contracts.</div>
+    </div>
+    <div class="future-card color1">
+      <span class="future-icon">🌿</span>
+      <div class="future-tag">Planned</div>
+      <div class="future-title">Carbon Credit Tracking</div>
+      <div class="future-desc">Help farmers earn carbon credits for sustainable farming practices — an entirely new income stream alongside their crops.</div>
+    </div>
+    <div class="future-card color2">
+      <span class="future-icon">🗣️</span>
+      <div class="future-tag">Coming Soon</div>
+      <div class="future-title">Regional Language Support</div>
+      <div class="future-desc">Full platform support in Assamese, Bengali, Hindi, Tamil and more — making AgriLink accessible to every farmer in India.</div>
+    </div>
+    <div class="future-card color3">
+      <span class="future-icon">♻️</span>
+      <div class="future-tag">Planned</div>
+      <div class="future-title">Sustainability Score</div>
+      <div class="future-desc">A farm sustainability rating system that helps eco-conscious buyers find and pay a premium for organically grown, sustainable produce.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST / PARTNERS -->
+<div class="trust-section">
+  <div class="trust-label">Trusted by & featured in</div>
+  <div class="trust-logos">
+    <span class="trust-logo">NABARD</span>
+    <span class="trust-logo">ICAR</span>
+    <span class="trust-logo">StartupIndia</span>
+    <span class="trust-logo">YourStory</span>
+    <span class="trust-logo">The Hindu</span>
+    <span class="trust-logo">Economic Times</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">Join the AgriLink Revolution</div>
+  <div class="cta-sub">Whether you're a farmer looking for fair prices or an industry seeking reliable supply — we built AgriLink for you.</div>
+  <div class="cta-btns">
+    <a href="register.html?role=farmer" class="btn-cta-white">🌱 Join as Farmer</a>
+    <a href="register.html?role=industry" class="btn-cta-ghost">🏭 Join as Industry</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none">
+        <div class="logo-icon">🌾</div>
+        <span class="logo-text" style="color:var(--white)">Agri<span style="color:var(--green-light)">Link</span></span>
+      </a>
+      <p>India's first dedicated contract farming marketplace connecting farmers directly with food industries.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Farmers</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=farmer">Register Farm</a></li>
+        <li><a href="marketplace.html">Browse Contracts</a></li>
+        <li><a href="dashboard-farmer.html">Dashboard</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Industries</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=industry">Register Company</a></li>
+        <li><a href="dashboard-industry.html">Post a Contract</a></li>
+        <li><a href="dashboard-industry.html">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AgriLink. All rights reserved.</span>
+    <span>Made with 🌾 for Indian Farmers</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-fab" id="chatFab">🤖</button>
+<div class="chatbot-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🤖</div>
+      <div><div class="chat-name">AgriLink Assistant</div><div class="chat-status">● Online</div></div>
+    </div>
+    <button class="chat-close-btn" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot"><div class="msg-bubble">👋 Want to know more about AgriLink's mission? Ask me anything!</div></div>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..."/>
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('chatFab').addEventListener('click',()=>document.getElementById('chatPanel').classList.toggle('open'));
+  document.getElementById('chatClose').addEventListener('click',()=>document.getElementById('chatPanel').classList.remove('open'));
+
+  async function sendMessage(){
+    const input=document.getElementById('chatInput');
+    const text=input.value.trim();if(!text)return;
+    input.value='';
+    const msgs=document.getElementById('chatMessages');
+    msgs.innerHTML+=`<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
+    const tid='t'+Date.now();
+    msgs.innerHTML+=`<div class="msg bot" id="${tid}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+    msgs.scrollTop=msgs.scrollHeight;
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:'You are AgriLink AI assistant on the About page. Answer questions about AgriLink\'s mission, story, team, values and vision. AgriLink is an Indian contract farming marketplace that connects farmers directly with industries, eliminating middlemen. Keep responses friendly and inspiring.',messages:[{role:'user',content:text}]})});
+      const data=await res.json();
+      document.getElementById(tid).remove();
+      msgs.innerHTML+=`<div class="msg bot"><div class="msg-bubble">${data.content?.[0]?.text||'Sorry, try again.'}</div></div>`;
+    }catch{
+      document.getElementById(tid).remove();
+      msgs.innerHTML+=`<div class="msg bot"><div class="msg-bubble">Something went wrong. Please try again.</div></div>`;
+    }
+    msgs.scrollTop=msgs.scrollHeight;
+  }
+  document.getElementById('chatSend').addEventListener('click',sendMessage);
+  document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage();});
+</script>
+</body>
+</html>

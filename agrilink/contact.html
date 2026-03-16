@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — AgriLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-deep:#1a3a2a; --green-mid:#2d6a4f; --green-fresh:#52b788;
+      --green-light:#95d5b2; --cream:#f8f4ed; --cream-dark:#ede8df;
+      --white:#ffffff; --text-dark:#1a2e1e; --text-mid:#3d5a47;
+      --text-light:#6b8f74; --gold:#c9a84c; --red:#e05c5c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(248,244,237,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(82,183,136,0.15);box-shadow:0 2px 20px rgba(26,58,42,0.06);}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-icon{width:38px;height:38px;background:var(--green-mid);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .logo-text{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--green-deep);}
+    .logo-text span{color:var(--green-fresh);}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text-mid);transition:color 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--green-mid);}
+    .nav-cta{display:flex;gap:12px;}
+    .btn-outline{padding:9px 22px;border:1.5px solid var(--green-mid);border-radius:8px;background:transparent;color:var(--green-mid);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+    .btn-outline:hover{background:var(--green-mid);color:var(--white);}
+    .btn-solid{padding:9px 22px;border:none;border-radius:8px;background:var(--green-mid);color:var(--white);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+    .btn-solid:hover{background:var(--green-deep);}
+
+    /* HERO */
+    .page-hero{margin-top:74px;background:var(--green-deep);padding:80px 60px;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(82,183,136,0.12) 0%,transparent 70%);}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(82,183,136,0.15);border:1px solid rgba(82,183,136,0.3);border-radius:100px;padding:6px 18px;font-size:13px;font-weight:500;color:var(--green-light);margin-bottom:20px;}
+    .page-title{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--white);letter-spacing:-2px;margin-bottom:16px;}
+    .page-title em{font-style:normal;color:var(--green-fresh);}
+    .page-sub{font-size:18px;color:rgba(255,255,255,0.6);max-width:520px;margin:0 auto;line-height:1.7;}
+
+    /* MAIN LAYOUT */
+    .main-section{padding:80px 60px;display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;}
+
+    /* LEFT INFO */
+    .contact-info{display:flex;flex-direction:column;gap:0;}
+    .info-header{margin-bottom:36px;}
+    .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-fresh);margin-bottom:10px;}
+    .section-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--green-deep);line-height:1.15;letter-spacing:-1px;margin-bottom:14px;}
+    .section-sub{font-size:15px;color:var(--text-mid);line-height:1.8;}
+
+    .contact-cards{display:flex;flex-direction:column;gap:14px;margin-bottom:36px;}
+    .contact-card{background:var(--white);border-radius:16px;padding:20px 22px;border:1px solid var(--cream-dark);display:flex;gap:16px;align-items:flex-start;transition:all 0.2s;}
+    .contact-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,58,42,0.08);border-color:var(--green-light);}
+    .contact-card-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .contact-card-icon.green{background:rgba(82,183,136,0.12);}
+    .contact-card-icon.gold{background:rgba(201,168,76,0.12);}
+    .contact-card-icon.blue{background:rgba(59,130,246,0.1);}
+    .contact-card-icon.red{background:rgba(224,92,92,0.1);}
+    .contact-card-title{font-size:14px;font-weight:600;color:var(--text-dark);margin-bottom:4px;}
+    .contact-card-value{font-size:14px;color:var(--text-mid);}
+    .contact-card-value a{color:var(--green-mid);text-decoration:none;}
+    .contact-card-value a:hover{text-decoration:underline;}
+    .contact-card-sub{font-size:12px;color:var(--text-light);margin-top:2px;}
+
+    /* OFFICE */
+    .office-box{background:var(--green-deep);border-radius:20px;padding:24px 26px;margin-bottom:28px;}
+    .office-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+    .office-items{display:flex;flex-direction:column;gap:10px;}
+    .office-item{display:flex;gap:10px;align-items:flex-start;}
+    .office-item-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+    .office-item-text{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;}
+    .office-item-text strong{color:var(--white);display:block;}
+
+    /* SOCIAL */
+    .social-title{font-size:14px;font-weight:600;color:var(--text-dark);margin-bottom:12px;}
+    .social-links{display:flex;gap:10px;}
+    .social-btn{width:42px;height:42px;border-radius:10px;background:var(--white);border:1.5px solid var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+    .social-btn:hover{border-color:var(--green-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,58,42,0.08);}
+
+    /* FORM */
+    .contact-form-wrap{background:var(--white);border-radius:24px;padding:40px;border:1px solid var(--cream-dark);box-shadow:0 8px 32px rgba(26,58,42,0.06);}
+    .form-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--green-deep);margin-bottom:6px;}
+    .form-sub{font-size:14px;color:var(--text-light);margin-bottom:28px;}
+
+    /* TOPIC SELECTOR */
+    .topic-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+    .topic-btn{padding:12px 14px;border:1.5px solid var(--cream-dark);border-radius:10px;background:var(--white);font-size:13px;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;text-align:left;}
+    .topic-btn:hover{border-color:var(--green-light);}
+    .topic-btn.selected{border-color:var(--green-mid);background:rgba(82,183,136,0.06);color:var(--green-mid);}
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+    .form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .form-label{font-size:13px;font-weight:500;color:var(--text-dark);}
+    .form-label span{color:var(--red);}
+    .form-input,.form-select,.form-textarea{padding:12px 14px;border:1.5px solid var(--cream-dark);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);outline:none;background:var(--white);transition:border-color 0.2s,box-shadow 0.2s;}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green-fresh);box-shadow:0 0 0 3px rgba(82,183,136,0.1);}
+    .form-input::placeholder{color:var(--text-light);}
+    .form-textarea{resize:vertical;min-height:120px;}
+    .form-hint{font-size:12px;color:var(--text-light);margin-top:4px;}
+
+    /* ROLE SELECT */
+    .role-row{display:flex;gap:10px;margin-bottom:16px;}
+    .role-choice{flex:1;padding:10px;border:1.5px solid var(--cream-dark);border-radius:10px;background:var(--white);font-size:13px;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;text-align:center;}
+    .role-choice:hover{border-color:var(--green-light);}
+    .role-choice.selected{border-color:var(--green-mid);background:rgba(82,183,136,0.06);color:var(--green-mid);}
+
+    .btn-submit{width:100%;padding:15px;background:var(--green-mid);color:var(--white);border:none;border-radius:12px;font-size:16px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px;}
+    .btn-submit:hover{background:var(--green-deep);transform:translateY(-1px);box-shadow:0 8px 24px rgba(45,106,79,0.25);}
+
+    /* SUCCESS */
+    .form-success{display:none;text-align:center;padding:40px 20px;}
+    .form-success.show{display:block;animation:fadeIn 0.4s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .success-icon{font-size:60px;margin-bottom:16px;}
+    .success-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--green-deep);margin-bottom:10px;}
+    .success-sub{font-size:15px;color:var(--text-mid);line-height:1.7;margin-bottom:24px;}
+    .btn-back-form{padding:12px 28px;background:transparent;color:var(--green-mid);border:1.5px solid var(--green-mid);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+    .btn-back-form:hover{background:var(--green-mid);color:var(--white);}
+
+    /* ERROR */
+    .error-msg{background:rgba(224,92,92,0.08);border:1px solid rgba(224,92,92,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:16px;display:none;}
+    .error-msg.show{display:block;}
+
+    /* MAP SECTION */
+    .map-section{padding:0 60px 80px;}
+    .map-placeholder{background:var(--white);border-radius:20px;border:2px dashed rgba(82,183,136,0.25);height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--text-light);}
+    .map-placeholder-icon{font-size:48px;opacity:0.4;}
+    .map-label-title{font-size:16px;font-weight:600;color:var(--text-mid);}
+    .map-label-sub{font-size:13px;}
+
+    /* SUPPORT TOPICS */
+    .support-section{padding:80px 60px;background:var(--cream-dark);}
+    .support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+    .support-card{background:var(--white);border-radius:18px;padding:28px;border:1px solid rgba(82,183,136,0.08);transition:all 0.25s;cursor:pointer;}
+    .support-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(26,58,42,0.09);border-color:var(--green-light);}
+    .support-icon{font-size:32px;margin-bottom:14px;display:block;}
+    .support-title{font-size:16px;font-weight:600;color:var(--text-dark);margin-bottom:8px;}
+    .support-desc{font-size:14px;color:var(--text-light);line-height:1.6;margin-bottom:14px;}
+    .support-link{font-size:13px;color:var(--green-mid);font-weight:500;}
+
+    /* FOOTER */
+    footer{background:var(--green-deep);padding:60px 60px 30px;}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08);}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-top:14px;max-width:260px;}
+    .footer-col-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:16px;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .footer-links a{font-size:14px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--green-light);}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;font-size:13px;color:rgba(255,255,255,0.4);}
+
+    /* CHATBOT */
+    .chatbot-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:56px;height:56px;background:var(--green-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 30px rgba(45,106,79,0.4);transition:all 0.3s;border:none;font-size:24px;}
+    .chatbot-fab:hover{transform:scale(1.08);background:var(--green-deep);}
+    .chatbot-panel{position:fixed;bottom:96px;right:28px;z-index:998;width:360px;background:var(--white);border-radius:20px;box-shadow:0 20px 60px rgba(26,58,42,0.18);border:1px solid rgba(82,183,136,0.15);overflow:hidden;display:none;flex-direction:column;max-height:500px;}
+    .chatbot-panel.open{display:flex;}
+    .chat-header{background:var(--green-mid);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+    .chat-header-info{display:flex;align-items:center;gap:10px;}
+    .chat-avatar{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .chat-name{font-size:15px;font-weight:600;color:var(--white);}
+    .chat-status{font-size:12px;color:rgba(255,255,255,0.7);}
+    .chat-close-btn{background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;}
+    .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
+    .msg{max-width:85%;}
+    .msg.bot{align-self:flex-start;}
+    .msg.user{align-self:flex-end;}
+    .msg-bubble{padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;}
+    .msg.bot .msg-bubble{background:var(--cream);color:var(--text-dark);border-bottom-left-radius:4px;}
+    .msg.user .msg-bubble{background:var(--green-mid);color:var(--white);border-bottom-right-radius:4px;}
+    .chat-input-wrap{padding:12px 16px;border-top:1px solid var(--cream-dark);display:flex;gap:8px;}
+    .chat-input{flex:1;padding:10px 14px;border:1.5px solid var(--cream-dark);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+    .chat-input:focus{border-color:var(--green-light);}
+    .chat-send{width:40px;height:40px;background:var(--green-mid);border:none;border-radius:10px;color:var(--white);font-size:16px;cursor:pointer;}
+    .typing{display:flex;gap:4px;align-items:center;}
+    .typing span{width:7px;height:7px;background:var(--text-light);border-radius:50%;animation:bounce 1.2s infinite;}
+    .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🌾</div>
+    <span class="logo-text">Agri<span>Link</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="register.html" class="btn-solid">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📬 We respond within 24 hours</div>
+    <div class="page-title">Get in <em>Touch</em></div>
+    <div class="page-sub">Have a question, partnership idea or need support? We'd love to hear from you. Our team is here to help.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-section">
+
+  <!-- LEFT: Contact Info -->
+  <div class="contact-info">
+    <div class="info-header">
+      <div class="section-label">Contact Details</div>
+      <div class="section-title">Let's Start a Conversation</div>
+      <div class="section-sub">Whether you're a farmer, an industry buyer, a potential investor or just curious — reach out. We're a team that genuinely cares.</div>
+    </div>
+
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-card-icon green">📧</div>
+        <div>
+          <div class="contact-card-title">Email Us</div>
+          <div class="contact-card-value"><a href="mailto:hello@agrilink.in">hello@agrilink.in</a></div>
+          <div class="contact-card-sub">For general inquiries and support</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon gold">📱</div>
+        <div>
+          <div class="contact-card-title">Call or WhatsApp</div>
+          <div class="contact-card-value"><a href="tel:+919435012345">+91 94350 12345</a></div>
+          <div class="contact-card-sub">Mon–Sat, 9 AM – 6 PM IST</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon blue">🏢</div>
+        <div>
+          <div class="contact-card-title">Headquarters</div>
+          <div class="contact-card-value">AgriLink Technologies Pvt. Ltd.</div>
+          <div class="contact-card-sub">Guwahati, Assam, India 781001</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon red">⚡</div>
+        <div>
+          <div class="contact-card-title">Response Time</div>
+          <div class="contact-card-value">Within 24 hours</div>
+          <div class="contact-card-sub">We reply to every message personally</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="office-box">
+      <div class="office-title">📍 Our Offices</div>
+      <div class="office-items">
+        <div class="office-item">
+          <span class="office-item-icon">🏛️</span>
+          <div class="office-item-text">
+            <strong>Headquarters — Guwahati, Assam</strong>
+            Startup Hub, GS Road, Christian Basti, Guwahati — 781005
+          </div>
+        </div>
+        <div class="office-item">
+          <span class="office-item-icon">🏙️</span>
+          <div class="office-item-text">
+            <strong>Operations Office — Imphal, Manipur</strong>
+            Khuman Lampak, Imphal East — 795001
+          </div>
+        </div>
+        <div class="office-item">
+          <span class="office-item-icon">💼</span>
+          <div class="office-item-text">
+            <strong>Business Development — New Delhi</strong>
+            Connaught Place, New Delhi — 110001
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="social-title">Follow Us</div>
+      <div class="social-links">
+        <a href="#" class="social-btn" title="Twitter / X">𝕏</a>
+        <a href="#" class="social-btn" title="LinkedIn">in</a>
+        <a href="#" class="social-btn" title="Instagram">📷</a>
+        <a href="#" class="social-btn" title="YouTube">▶️</a>
+        <a href="#" class="social-btn" title="WhatsApp">💬</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Contact Form -->
+  <div class="contact-form-wrap">
+    <div id="formContent">
+      <div class="form-title">Send us a Message</div>
+      <div class="form-sub">Fill in the form and we'll get back to you within 24 hours.</div>
+
+      <!-- I am a -->
+      <div class="form-group">
+        <div class="form-label">I am a <span>*</span></div>
+        <div class="role-row">
+          <button class="role-choice selected" onclick="selectRole(this)">🌱 Farmer</button>
+          <button class="role-choice" onclick="selectRole(this)">🏭 Industry / Buyer</button>
+          <button class="role-choice" onclick="selectRole(this)">💼 Investor</button>
+          <button class="role-choice" onclick="selectRole(this)">👋 Other</button>
+        </div>
+      </div>
+
+      <!-- Topic -->
+      <div class="form-group">
+        <div class="form-label">What is this about? <span>*</span></div>
+        <div class="topic-selector">
+          <button class="topic-btn selected" onclick="selectTopic(this)">🤝 Partnership Inquiry</button>
+          <button class="topic-btn" onclick="selectTopic(this)">🐛 Report a Bug</button>
+          <button class="topic-btn" onclick="selectTopic(this)">💡 Feature Request</button>
+          <button class="topic-btn" onclick="selectTopic(this)">📋 Contract Help</button>
+          <button class="topic-btn" onclick="selectTopic(this)">💰 Payment Issue</button>
+          <button class="topic-btn" onclick="selectTopic(this)">❓ General Question</button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">First Name <span>*</span></label>
+          <input type="text" class="form-input" id="firstName" placeholder="e.g. Ravi"/>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Last Name <span>*</span></label>
+          <input type="text" class="form-input" id="lastName" placeholder="e.g. Kumar"/>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:16px">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Mobile Number <span>*</span></label>
+          <input type="tel" class="form-input" id="mobile" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="email" placeholder="you@example.com"/>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:16px">
+        <label class="form-label">State / Location</label>
+        <select class="form-select">
+          <option value="">Select your state</option>
+          <option>Assam</option><option>Manipur</option><option>Meghalaya</option>
+          <option>Arunachal Pradesh</option><option>Nagaland</option><option>Tripura</option>
+          <option>Mizoram</option><option>Sikkim</option><option>West Bengal</option>
+          <option>Bihar</option><option>Uttar Pradesh</option><option>Punjab</option>
+          <option>Haryana</option><option>Maharashtra</option><option>Gujarat</option>
+          <option>Karnataka</option><option>Tamil Nadu</option><option>Kerala</option>
+          <option>Andhra Pradesh</option><option>Telangana</option><option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Your Message <span>*</span></label>
+        <textarea class="form-textarea" id="message" placeholder="Tell us how we can help you. The more detail you provide, the better we can assist..."></textarea>
+        <div class="form-hint">Minimum 20 characters. We read every message personally.</div>
+      </div>
+
+      <div id="errorMsg" class="error-msg">⚠️ Please fill in all required fields before submitting.</div>
+
+      <button class="btn-submit" onclick="submitForm()">
+        <span id="submitText">Send Message 📬</span>
+      </button>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="form-success" id="successState">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Message Sent!</div>
+      <div class="success-sub">Thank you for reaching out. Our team will review your message and get back to you within 24 hours. We're excited to connect!</div>
+      <button class="btn-back-form" onclick="resetForm()">Send Another Message</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="map-placeholder">
+    <span class="map-placeholder-icon">🗺️</span>
+    <div class="map-label-title">Interactive Map — Coming Soon</div>
+    <div class="map-label-sub">Our offices in Guwahati, Imphal and New Delhi will appear here</div>
+  </div>
+</div>
+
+<!-- SUPPORT TOPICS -->
+<div class="support-section">
+  <div style="text-align:center">
+    <div class="section-label" style="text-align:center">Quick Help</div>
+    <div class="section-title" style="text-align:center;max-width:500px;margin:0 auto">How Can We Help You?</div>
+  </div>
+  <div class="support-grid">
+    <div class="support-card">
+      <span class="support-icon">🌱</span>
+      <div class="support-title">Farmer Support</div>
+      <div class="support-desc">Need help registering your farm, applying for contracts, or understanding payment terms?</div>
+      <div class="support-link" onclick="document.getElementById('message').value='Hi, I need help as a farmer with: ';document.getElementById('message').focus()">Get farmer help →</div>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">🏭</span>
+      <div class="support-title">Industry Support</div>
+      <div class="support-desc">Questions about posting contracts, reviewing applications, or managing your supply chain?</div>
+      <div class="support-link" onclick="document.getElementById('message').value='Hi, I need help as an industry buyer with: ';document.getElementById('message').focus()">Get industry help →</div>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">💼</span>
+      <div class="support-title">Partnerships & Investment</div>
+      <div class="support-desc">Interested in partnering with AgriLink, investing in our mission, or exploring collaborations?</div>
+      <div class="support-link" onclick="document.getElementById('message').value='Hi, I am interested in a partnership/investment opportunity: ';document.getElementById('message').focus()">Explore partnerships →</div>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">🐛</span>
+      <div class="support-title">Technical Issues</div>
+      <div class="support-desc">Encountered a bug or technical problem on the platform? Let us know and we'll fix it fast.</div>
+      <div class="support-link" onclick="document.getElementById('message').value='Hi, I encountered a technical issue: ';document.getElementById('message').focus()">Report an issue →</div>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">📰</span>
+      <div class="support-title">Press & Media</div>
+      <div class="support-desc">Journalist, blogger or researcher? We'd love to share our story and data about Indian agriculture.</div>
+      <div class="support-link" onclick="document.getElementById('message').value='Hi, I am a journalist/researcher and would like to: ';document.getElementById('message').focus()">Press inquiry →</div>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">🤖</span>
+      <div class="support-title">AI Assistant</div>
+      <div class="support-desc">Before contacting us, try our AI assistant — it can answer most questions instantly, 24/7.</div>
+      <div class="support-link" onclick="document.getElementById('chatFab').click()">Open AI chat →</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none">
+        <div class="logo-icon">🌾</div>
+        <span class="logo-text" style="color:var(--white)">Agri<span style="color:var(--green-light)">Link</span></span>
+      </a>
+      <p>India's first dedicated contract farming marketplace connecting farmers directly with food industries.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Farmers</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=farmer">Register Farm</a></li>
+        <li><a href="marketplace.html">Browse Contracts</a></li>
+        <li><a href="dashboard-farmer.html">Dashboard</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Industries</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=industry">Register Company</a></li>
+        <li><a href="dashboard-industry.html">Post a Contract</a></li>
+        <li><a href="dashboard-industry.html">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AgriLink. All rights reserved.</span>
+    <span>Made with 🌾 for Indian Farmers</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-fab" id="chatFab">🤖</button>
+<div class="chatbot-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🤖</div>
+      <div><div class="chat-name">AgriLink Assistant</div><div class="chat-status">● Online</div></div>
+    </div>
+    <button class="chat-close-btn" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot"><div class="msg-bubble">👋 Hi! Need help? I can answer most questions instantly — or help you reach the right team. What's on your mind?</div></div>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..."/>
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+  function selectRole(btn) {
+    document.querySelectorAll('.role-choice').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+  function selectTopic(btn) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function submitForm() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const err = document.getElementById('errorMsg');
+
+    if (!firstName || !mobile || !message || message.length < 20) {
+      err.classList.add('show');
+      err.textContent = !firstName ? '⚠️ Please enter your first name.'
+        : !mobile ? '⚠️ Please enter your mobile number.'
+        : !message ? '⚠️ Please write a message.'
+        : '⚠️ Message must be at least 20 characters.';
+      return;
+    }
+    err.classList.remove('show');
+
+    const btn = document.querySelector('.btn-submit');
+    btn.style.opacity = '0.7';
+    btn.style.pointerEvents = 'none';
+    document.getElementById('submitText').textContent = 'Sending...';
+
+    setTimeout(() => {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successState').classList.add('show');
+    }, 1200);
+  }
+
+  function resetForm() {
+    document.getElementById('formContent').style.display = 'block';
+    document.getElementById('successState').classList.remove('show');
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('mobile').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+    const btn = document.querySelector('.btn-submit');
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+    document.getElementById('submitText').textContent = 'Send Message 📬';
+  }
+
+  // Chatbot
+  document.getElementById('chatFab').addEventListener('click', () => document.getElementById('chatPanel').classList.toggle('open'));
+  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatPanel').classList.remove('open'));
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim(); if (!text) return;
+    input.value = '';
+    const msgs = document.getElementById('chatMessages');
+    msgs.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
+    const tid = 't' + Date.now();
+    msgs.innerHTML += `<div class="msg bot" id="${tid}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514', max_tokens: 800,
+          system: 'You are AgriLink AI support assistant on the Contact page. Help users with their questions, direct them to the right team, and resolve common issues. AgriLink is an Indian contract farming marketplace. Email: hello@agrilink.in, Phone: +91 94350 12345. Be friendly and helpful.',
+          messages: [{ role: 'user', content: text }]
+        })
+      });
+      const data = await res.json();
+      document.getElementById(tid).remove();
+      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">${data.content?.[0]?.text || 'Sorry, try again.'}</div></div>`;
+    } catch {
+      document.getElementById(tid).remove();
+      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">Something went wrong. Please try again.</div></div>`;
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  document.getElementById('chatSend').addEventListener('click', sendMessage);
+  document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+</script>
+</body>
+</html>
