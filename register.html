@@ -609,23 +609,49 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function submitForm() {
-    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-    const screen = document.getElementById('successScreen');
-    screen.classList.add('active');
+  async function submitForm() {
+    const btn = document.querySelector('.btn-next');
+    btn.textContent = 'Creating account...';
+    btn.disabled = true;
 
-    if (currentRole === 'farmer') {
-      document.getElementById('successTitle').textContent = '🌱 Welcome, Farmer!';
-      document.getElementById('successSub').textContent = 'Your farm profile is ready. Start browsing contracts and apply to supply crops directly to verified industries.';
-      document.getElementById('dashboardBtn').href = 'dashboard-farmer.html';
-      document.getElementById('dashboardBtn').textContent = 'Go to Farmer Dashboard →';
-    } else {
-      document.getElementById('successTitle').textContent = '🏭 Welcome aboard!';
-      document.getElementById('successSub').textContent = 'Your company profile is ready. Post your first crop requirement and connect with thousands of farmers across India.';
-      document.getElementById('dashboardBtn').href = 'dashboard-industry.html';
-      document.getElementById('dashboardBtn').textContent = 'Go to Industry Dashboard →';
+    const full_name = document.querySelector('#step2 input[placeholder="e.g. Ravi"]').value.trim() + ' ' +
+                      document.querySelector('#step2 input[placeholder="e.g. Kumar"]').value.trim();
+    const mobile = document.querySelector('#step2 input[type="tel"]').value.trim();
+    const email = document.querySelector('#step2 input[type="email"]').value.trim();
+    const password = document.getElementById('passwordInput').value.trim();
+    const state = document.querySelector('#step2 select').value;
+
+    if (!full_name.trim() || !mobile || !password) {
+      alert('Please fill in your name, mobile and password.');
+      btn.textContent = '🎉 Create My Account';
+      btn.disabled = false;
+      return;
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    try {
+      const data = await registerUser({ full_name, mobile, email, password, role: currentRole, state });
+
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      const screen = document.getElementById('successScreen');
+      screen.classList.add('active');
+
+      if (currentRole === 'farmer') {
+        document.getElementById('successTitle').textContent = '🌱 Welcome, Farmer!';
+        document.getElementById('successSub').textContent = `Your account is ready, ${data.user.full_name}! Start browsing contracts now.`;
+        document.getElementById('dashboardBtn').href = 'dashboard-farmer.html';
+        document.getElementById('dashboardBtn').textContent = 'Go to Farmer Dashboard →';
+      } else {
+        document.getElementById('successTitle').textContent = '🏭 Welcome aboard!';
+        document.getElementById('successSub').textContent = `Your company profile is ready, ${data.user.full_name}! Post your first contract now.`;
+        document.getElementById('dashboardBtn').href = 'dashboard-industry.html';
+        document.getElementById('dashboardBtn').textContent = 'Go to Industry Dashboard →';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      alert('❌ ' + err.message);
+      btn.textContent = '🎉 Create My Account';
+      btn.disabled = false;
+    }
   }
 
   function toggleCrop(el) { el.classList.toggle('selected'); }
@@ -642,6 +668,13 @@
   // Check URL param for pre-selected role
   const params = new URLSearchParams(window.location.search);
   if (params.get('role') === 'industry') selectRole('industry');
+
+  // If already logged in, redirect to dashboard
+  if (isLoggedIn()) {
+    const user = getCurrentUser();
+    window.location.href = user.role === 'farmer' ? 'dashboard-farmer.html' : 'dashboard-industry.html';
+  }
 </script>
+<script src="api.js"></script>
 </body>
 </html>

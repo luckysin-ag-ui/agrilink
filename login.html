@@ -341,7 +341,7 @@
     inp.type = inp.type === 'password' ? 'text' : 'password';
   }
 
-  function doLogin() {
+  async function doLogin() {
     const mobile = document.getElementById('mobileInput').value.trim();
     const pwd = document.getElementById('pwdInput').value.trim();
     const err = document.getElementById('errorMsg');
@@ -356,12 +356,18 @@
     btn.classList.add('loading');
     document.getElementById('loginBtnText').textContent = 'Logging in...';
 
-    // Simulate login
-    setTimeout(() => {
+    try {
+      const data = await loginUser(mobile, pwd);
       btn.classList.remove('loading');
       document.getElementById('loginBtnText').textContent = 'Login to AgriLink';
-      showSuccess();
-    }, 1500);
+      currentRole = data.user.role;
+      showSuccess(data.user);
+    } catch (err2) {
+      btn.classList.remove('loading');
+      document.getElementById('loginBtnText').textContent = 'Login to AgriLink';
+      err.textContent = '⚠️ ' + err2.message;
+      err.classList.add('show');
+    }
   }
 
   function showOtp() {
@@ -402,7 +408,7 @@
     alert('A new OTP has been sent to your mobile number.');
   }
 
-  function showSuccess() {
+  function showSuccess(user) {
     document.getElementById('emailScreen').classList.add('hidden');
     document.getElementById('otpScreen').classList.remove('active');
 
@@ -410,16 +416,18 @@
     success.classList.add('active');
     document.getElementById('roleTabs').style.display = 'none';
 
-    if (currentRole === 'farmer') {
-      document.getElementById('successTitle').textContent = '👋 Welcome back, Farmer!';
-      document.getElementById('successSub').textContent = 'You have 3 new contract matches and 1 message waiting for you.';
+    if (user && user.role === 'farmer') {
+      document.getElementById('successTitle').textContent = `👋 Welcome back, ${user.full_name}!`;
+      document.getElementById('successSub').textContent = 'Redirecting you to your farmer dashboard...';
       document.getElementById('dashLink').href = 'dashboard-farmer.html';
       document.getElementById('dashLink').textContent = 'Go to Farmer Dashboard →';
+      setTimeout(() => window.location.href = 'dashboard-farmer.html', 1500);
     } else {
-      document.getElementById('successTitle').textContent = '👋 Welcome back!';
-      document.getElementById('successSub').textContent = 'You have 8 new farmer applications and 2 messages waiting for you.';
+      document.getElementById('successTitle').textContent = `👋 Welcome back, ${user ? user.full_name : ''}!`;
+      document.getElementById('successSub').textContent = 'Redirecting you to your industry dashboard...';
       document.getElementById('dashLink').href = 'dashboard-industry.html';
       document.getElementById('dashLink').textContent = 'Go to Industry Dashboard →';
+      setTimeout(() => window.location.href = 'dashboard-industry.html', 1500);
     }
   }
 
@@ -448,6 +456,14 @@
     if (items.children.length > 4) items.removeChild(items.lastChild);
     feedIdx++;
   }, 3000);
+</script>
+<script src="api.js"></script>
+<script>
+  // If already logged in redirect to dashboard
+  if (isLoggedIn()) {
+    const user = getCurrentUser();
+    window.location.href = user.role === 'farmer' ? 'dashboard-farmer.html' : 'dashboard-industry.html';
+  }
 </script>
 </body>
 </html>
