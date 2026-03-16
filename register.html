@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — AgriLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-deep: #1a3a2a; --green-mid: #2d6a4f; --green-fresh: #52b788;
+      --green-light: #95d5b2; --cream: #f8f4ed; --cream-dark: #ede8df;
+      --white: #ffffff; --text-dark: #1a2e1e; --text-mid: #3d5a47;
+      --text-light: #6b8f74; --gold: #c9a84c; --red: #e05c5c;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); min-height:100vh; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 60px; background:rgba(248,244,237,0.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(82,183,136,0.15); box-shadow:0 2px 20px rgba(26,58,42,0.06); }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-icon { width:38px; height:38px; background:var(--green-mid); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--green-deep); }
+    .logo-text span { color:var(--green-fresh); }
+    .nav-login { font-size:14px; color:var(--text-mid); text-decoration:none; }
+    .nav-login:hover { color:var(--green-mid); }
+
+    /* LAYOUT */
+    .page-wrap {
+      display:grid; grid-template-columns:1fr 1fr;
+      min-height:100vh; padding-top:74px;
+    }
+
+    /* LEFT PANEL */
+    .left-panel {
+      background:var(--green-deep);
+      padding:60px 56px;
+      display:flex; flex-direction:column; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .left-panel::before {
+      content:''; position:absolute; top:-120px; right:-120px;
+      width:500px; height:500px;
+      background:radial-gradient(circle,rgba(82,183,136,0.15) 0%,transparent 70%);
+    }
+    .left-panel::after {
+      content:''; position:absolute; bottom:-80px; left:-80px;
+      width:300px; height:300px;
+      background:radial-gradient(circle,rgba(149,213,178,0.08) 0%,transparent 70%);
+    }
+    .left-content { position:relative; z-index:1; }
+    .left-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(82,183,136,0.15); border:1px solid rgba(82,183,136,0.3);
+      border-radius:100px; padding:6px 16px;
+      font-size:13px; font-weight:500; color:var(--green-light);
+      margin-bottom:28px;
+    }
+    .left-title {
+      font-family:'Playfair Display',serif;
+      font-size:40px; font-weight:700;
+      color:var(--white); line-height:1.15;
+      letter-spacing:-1px; margin-bottom:16px;
+    }
+    .left-title em { font-style:normal; color:var(--green-fresh); }
+    .left-sub { font-size:16px; color:rgba(255,255,255,0.6); line-height:1.7; margin-bottom:40px; }
+
+    .left-benefits { display:flex; flex-direction:column; gap:16px; margin-bottom:40px; }
+    .benefit { display:flex; align-items:flex-start; gap:14px; }
+    .benefit-icon {
+      width:38px; height:38px; flex-shrink:0;
+      background:rgba(82,183,136,0.15);
+      border-radius:10px;
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+    }
+    .benefit-text { font-size:14px; color:rgba(255,255,255,0.75); line-height:1.6; }
+    .benefit-text strong { color:var(--white); display:block; margin-bottom:2px; }
+
+    .left-testimonial {
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px; padding:20px 24px;
+    }
+    .testimonial-text { font-size:14px; color:rgba(255,255,255,0.7); line-height:1.7; font-style:italic; margin-bottom:14px; }
+    .testimonial-author { display:flex; align-items:center; gap:10px; }
+    .author-avatar { width:36px; height:36px; background:rgba(82,183,136,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .author-name { font-size:14px; font-weight:600; color:var(--white); }
+    .author-role { font-size:12px; color:rgba(255,255,255,0.5); }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      padding:50px 60px;
+      display:flex; flex-direction:column; justify-content:center;
+      overflow-y:auto;
+    }
+
+    .form-header { margin-bottom:32px; }
+    .form-title { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--green-deep); margin-bottom:8px; }
+    .form-sub { font-size:15px; color:var(--text-light); }
+    .form-sub a { color:var(--green-mid); text-decoration:none; font-weight:500; }
+
+    /* ROLE SELECTOR */
+    .role-selector { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:28px; }
+    .role-card {
+      border:2px solid var(--cream-dark);
+      border-radius:14px; padding:18px;
+      cursor:pointer; transition:all 0.2s;
+      background:var(--white);
+      position:relative;
+    }
+    .role-card:hover { border-color:var(--green-light); }
+    .role-card.selected {
+      border-color:var(--green-mid);
+      background:rgba(82,183,136,0.05);
+    }
+    .role-card.selected::after {
+      content:'✓';
+      position:absolute; top:10px; right:12px;
+      width:22px; height:22px;
+      background:var(--green-mid); color:white;
+      border-radius:50%; font-size:12px; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .role-icon { font-size:28px; margin-bottom:8px; display:block; }
+    .role-name { font-size:15px; font-weight:600; color:var(--text-dark); margin-bottom:4px; }
+    .role-desc { font-size:13px; color:var(--text-light); line-height:1.5; }
+
+    /* STEPS INDICATOR */
+    .steps { display:flex; align-items:center; gap:0; margin-bottom:28px; }
+    .step-item { display:flex; align-items:center; gap:8px; flex:1; }
+    .step-dot {
+      width:28px; height:28px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:12px; font-weight:700; flex-shrink:0;
+      transition:all 0.3s;
+    }
+    .step-dot.active { background:var(--green-mid); color:white; }
+    .step-dot.done { background:var(--green-fresh); color:white; }
+    .step-dot.inactive { background:var(--cream-dark); color:var(--text-light); }
+    .step-label { font-size:12px; color:var(--text-light); }
+    .step-label.active { color:var(--green-mid); font-weight:600; }
+    .step-line { flex:1; height:2px; background:var(--cream-dark); margin:0 8px; }
+    .step-line.done { background:var(--green-fresh); }
+
+    /* FORM */
+    .form-section { display:none; }
+    .form-section.active { display:block; animation:fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .form-row.full { grid-template-columns:1fr; }
+    .form-group { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+    .form-label { font-size:13px; font-weight:500; color:var(--text-dark); }
+    .form-label span { color:var(--red); }
+    .form-input, .form-select, .form-textarea {
+      padding:12px 14px;
+      border:1.5px solid var(--cream-dark);
+      border-radius:10px;
+      font-size:14px; font-family:'DM Sans',sans-serif;
+      color:var(--text-dark); outline:none;
+      background:var(--white);
+      transition:border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--green-fresh); }
+    .form-input::placeholder { color:var(--text-light); }
+    .form-textarea { resize:vertical; min-height:90px; }
+    .form-hint { font-size:12px; color:var(--text-light); margin-top:4px; }
+
+    .input-with-icon { position:relative; }
+    .input-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; }
+    .input-with-icon .form-input { padding-left:42px; }
+    .password-toggle { position:absolute; right:14px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:16px; background:none; border:none; color:var(--text-light); }
+
+    .divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+    .divider-line { flex:1; height:1px; background:var(--cream-dark); }
+    .divider-text { font-size:13px; color:var(--text-light); }
+
+    /* FARMER SPECIFIC */
+    .crops-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:4px; }
+    .crop-tag {
+      padding:8px 12px; border:1.5px solid var(--cream-dark);
+      border-radius:8px; font-size:13px; color:var(--text-mid);
+      cursor:pointer; text-align:center; transition:all 0.2s;
+      background:var(--white);
+    }
+    .crop-tag:hover { border-color:var(--green-light); }
+    .crop-tag.selected { border-color:var(--green-mid); background:rgba(82,183,136,0.08); color:var(--green-mid); font-weight:500; }
+
+    .land-options { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+    .land-option {
+      padding:8px 16px; border:1.5px solid var(--cream-dark);
+      border-radius:8px; font-size:13px; color:var(--text-mid);
+      cursor:pointer; transition:all 0.2s; background:var(--white);
+    }
+    .land-option:hover { border-color:var(--green-light); }
+    .land-option.selected { border-color:var(--green-mid); background:rgba(82,183,136,0.08); color:var(--green-mid); font-weight:500; }
+
+    /* TERMS */
+    .terms-check { display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
+    .terms-check input { margin-top:3px; accent-color:var(--green-mid); }
+    .terms-text { font-size:13px; color:var(--text-mid); line-height:1.6; }
+    .terms-text a { color:var(--green-mid); text-decoration:none; }
+
+    /* BUTTONS */
+    .btn-next {
+      width:100%; padding:15px;
+      background:var(--green-mid); color:var(--white);
+      border:none; border-radius:12px;
+      font-size:16px; font-weight:500;
+      cursor:pointer; font-family:'DM Sans',sans-serif;
+      transition:all 0.2s; margin-top:4px;
+    }
+    .btn-next:hover { background:var(--green-deep); transform:translateY(-1px); }
+    .btn-back {
+      width:100%; padding:13px;
+      background:transparent; color:var(--text-mid);
+      border:1.5px solid var(--cream-dark); border-radius:12px;
+      font-size:15px; font-weight:500;
+      cursor:pointer; font-family:'DM Sans',sans-serif;
+      transition:all 0.2s; margin-top:8px;
+    }
+    .btn-back:hover { border-color:var(--green-light); color:var(--green-mid); }
+
+    /* SUCCESS */
+    .success-screen {
+      text-align:center; padding:20px 0;
+      display:none;
+    }
+    .success-screen.active { display:block; animation:fadeIn 0.5s ease; }
+    .success-icon { font-size:64px; margin-bottom:20px; }
+    .success-title { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--green-deep); margin-bottom:12px; }
+    .success-sub { font-size:15px; color:var(--text-mid); line-height:1.7; margin-bottom:28px; }
+    .success-actions { display:flex; flex-direction:column; gap:10px; }
+    .btn-dashboard { padding:15px; background:var(--green-mid); color:white; border:none; border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; display:block; transition:background 0.2s; }
+    .btn-dashboard:hover { background:var(--green-deep); }
+    .btn-marketplace-link { padding:13px; background:transparent; color:var(--green-mid); border:1.5px solid var(--green-mid); border-radius:12px; font-size:15px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; display:block; transition:all 0.2s; }
+    .btn-marketplace-link:hover { background:rgba(82,183,136,0.08); }
+
+    /* PROGRESS BAR */
+    .progress-bar { height:3px; background:var(--cream-dark); border-radius:100px; margin-bottom:28px; overflow:hidden; }
+    .progress-fill { height:100%; background:var(--green-fresh); border-radius:100px; transition:width 0.4s ease; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🌾</div>
+    <span class="logo-text">Agri<span>Link</span></span>
+  </a>
+  <a href="login.html" class="nav-login">Already have an account? <strong>Login →</strong></a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="left-content">
+      <div class="left-badge">🌾 Free to Join</div>
+      <div class="left-title">Join India's Largest <em>Contract Farming</em> Marketplace</div>
+      <div class="left-sub">Connect directly with verified industries or find reliable farmers. No middlemen, no hidden fees.</div>
+
+      <div class="left-benefits">
+        <div class="benefit">
+          <div class="benefit-icon">🤝</div>
+          <div class="benefit-text"><strong>Direct Connections</strong>Farmers deal directly with food companies, exporters and retailers across India.</div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-text"><strong>Better Prices</strong>No middlemen means farmers keep more profit and industries get fair pricing.</div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🔒</div>
+          <div class="benefit-text"><strong>Secure Agreements</strong>Digital contracts protect both parties with clear terms and payment guarantees.</div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🤖</div>
+          <div class="benefit-text"><strong>AI-Powered Support</strong>24/7 AI assistant to guide you through contracts and crop decisions.</div>
+        </div>
+      </div>
+
+      <div class="left-testimonial">
+        <div class="testimonial-text">"AgriLink helped me get a direct contract with ITC for my tomato farm. I earned 40% more than what I used to get from the local mandi."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">👨‍🌾</div>
+          <div>
+            <div class="author-name">Ramesh Patil</div>
+            <div class="author-role">Tomato Farmer · Nashik, Maharashtra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <!-- Step 1: Role Selection -->
+    <div id="step1" class="form-section active">
+      <div class="form-header">
+        <div class="form-title">Create your account</div>
+        <div class="form-sub">Already have an account? <a href="login.html">Login here</a></div>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
+
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-dot active">1</div>
+          <div class="step-label active">Your Role</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-dot inactive">2</div>
+          <div class="step-label">Basic Info</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-dot inactive">3</div>
+          <div class="step-label">Details</div>
+        </div>
+      </div>
+
+      <div style="font-size:14px;font-weight:600;color:var(--text-dark);margin-bottom:12px;">I am joining as a:</div>
+      <div class="role-selector">
+        <div class="role-card selected" id="farmerCard" onclick="selectRole('farmer')">
+          <span class="role-icon">🌱</span>
+          <div class="role-name">Farmer</div>
+          <div class="role-desc">I grow crops and want to find contract buyers</div>
+        </div>
+        <div class="role-card" id="industryCard" onclick="selectRole('industry')">
+          <span class="role-icon">🏭</span>
+          <div class="role-name">Industry / Buyer</div>
+          <div class="role-desc">I need to source crops from farmers directly</div>
+        </div>
+      </div>
+
+      <button class="btn-next" onclick="goToStep(2)">Continue →</button>
+    </div>
+
+    <!-- Step 2: Basic Info -->
+    <div id="step2" class="form-section">
+      <div class="form-header">
+        <div class="form-title" id="step2Title">Farmer Registration</div>
+        <div class="form-sub">Step 2 of 3 — Basic Information</div>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-dot done">✓</div>
+          <div class="step-label">Your Role</div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-item">
+          <div class="step-dot active">2</div>
+          <div class="step-label active">Basic Info</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-dot inactive">3</div>
+          <div class="step-label">Details</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name <span>*</span></label>
+          <input type="text" class="form-input" placeholder="e.g. Ravi"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name <span>*</span></label>
+          <input type="text" class="form-input" placeholder="e.g. Kumar"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mobile Number <span>*</span></label>
+        <div class="input-with-icon">
+          <span class="input-icon">📱</span>
+          <input type="tel" class="form-input" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-hint">We'll send an OTP to verify your number</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div class="input-with-icon">
+          <span class="input-icon">✉️</span>
+          <input type="email" class="form-input" placeholder="you@example.com"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password <span>*</span></label>
+        <div class="input-with-icon">
+          <span class="input-icon">🔒</span>
+          <input type="password" class="form-input" id="passwordInput" placeholder="Create a strong password"/>
+          <button class="password-toggle" onclick="togglePassword()">👁️</button>
+        </div>
+        <div class="form-hint">Minimum 8 characters with a number</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">State <span>*</span></label>
+        <select class="form-select">
+          <option value="">Select your state</option>
+          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+          <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+          <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+          <option>Himachal Pradesh</option><option>Jharkhand</option>
+          <option>Karnataka</option><option>Kerala</option>
+          <option>Madhya Pradesh</option><option>Maharashtra</option>
+          <option>Manipur</option><option>Meghalaya</option><option>Mizoram</option>
+          <option>Nagaland</option><option>Odisha</option><option>Punjab</option>
+          <option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option>
+          <option>Telangana</option><option>Tripura</option>
+          <option>Uttar Pradesh</option><option>Uttarakhand</option>
+          <option>West Bengal</option>
+        </select>
+      </div>
+
+      <button class="btn-next" onclick="goToStep(3)">Continue →</button>
+      <button class="btn-back" onclick="goToStep(1)">← Back</button>
+    </div>
+
+    <!-- Step 3: Role-specific Details -->
+    <div id="step3" class="form-section">
+      <div class="form-header">
+        <div class="form-title" id="step3Title">Farm Details</div>
+        <div class="form-sub">Step 3 of 3 — Almost there!</div>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-dot done">✓</div>
+          <div class="step-label">Your Role</div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-item">
+          <div class="step-dot done">✓</div>
+          <div class="step-label">Basic Info</div>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-item">
+          <div class="step-dot active">3</div>
+          <div class="step-label active">Details</div>
+        </div>
+      </div>
+
+      <!-- FARMER FIELDS -->
+      <div id="farmerFields">
+        <div class="form-group">
+          <label class="form-label">Village / Town <span>*</span></label>
+          <input type="text" class="form-input" placeholder="e.g. Sipajhar"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">District <span>*</span></label>
+          <input type="text" class="form-input" placeholder="e.g. Darrang"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Land Size <span>*</span></label>
+          <div class="land-options">
+            <div class="land-option" onclick="selectLand(this)">Under 1 Acre</div>
+            <div class="land-option selected" onclick="selectLand(this)">1–5 Acres</div>
+            <div class="land-option" onclick="selectLand(this)">5–10 Acres</div>
+            <div class="land-option" onclick="selectLand(this)">10–25 Acres</div>
+            <div class="land-option" onclick="selectLand(this)">25+ Acres</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Crops You Grow <span>*</span></label>
+          <div class="crops-grid">
+            <div class="crop-tag selected" onclick="toggleCrop(this)">🌾 Wheat</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌾 Rice</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌽 Maize</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🍅 Tomato</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🥔 Potato</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🧅 Onion</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌿 Tea</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🫚 Ginger</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌻 Mustard</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🫘 Pulses</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🥦 Vegetables</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">➕ Other</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Expected Annual Production</label>
+          <input type="text" class="form-input" placeholder="e.g. 20 metric tons per year"/>
+        </div>
+      </div>
+
+      <!-- INDUSTRY FIELDS -->
+      <div id="industryFields" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Company Name <span>*</span></label>
+          <input type="text" class="form-input" placeholder="e.g. Agro Foods Pvt. Ltd."/>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Industry Type <span>*</span></label>
+            <select class="form-select">
+              <option value="">Select type</option>
+              <option>Food Processing</option>
+              <option>Export / Trading</option>
+              <option>Retail Chain</option>
+              <option>Feed Manufacturing</option>
+              <option>Beverages</option>
+              <option>Spices & Condiments</option>
+              <option>Dairy Products</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company Size</label>
+            <select class="form-select">
+              <option value="">Select size</option>
+              <option>Startup (1–50 employees)</option>
+              <option>Small (50–200)</option>
+              <option>Medium (200–1000)</option>
+              <option>Large (1000+)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">GST Number</label>
+          <input type="text" class="form-input" placeholder="e.g. 27AAAAA0000A1Z5"/>
+          <div class="form-hint">For verified company badge on your profile</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Primary Crops Required <span>*</span></label>
+          <div class="crops-grid">
+            <div class="crop-tag" onclick="toggleCrop(this)">🌾 Wheat</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌾 Rice</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌽 Maize</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🍅 Tomato</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🥔 Potato</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🧅 Onion</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌿 Tea</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🫚 Ginger</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🌻 Mustard</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🫘 Pulses</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">🥦 Vegetables</div>
+            <div class="crop-tag" onclick="toggleCrop(this)">➕ Other</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Brief Description</label>
+          <textarea class="form-textarea" placeholder="Tell farmers a bit about your company and what you're looking for..."></textarea>
+        </div>
+      </div>
+
+      <div class="terms-check">
+        <input type="checkbox" id="termsCheck" checked/>
+        <div class="terms-text">I agree to AgriLink's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I confirm all information provided is accurate.</div>
+      </div>
+
+      <button class="btn-next" onclick="submitForm()">🎉 Create My Account</button>
+      <button class="btn-back" onclick="goToStep(2)">← Back</button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title" id="successTitle">Welcome to AgriLink!</div>
+      <div class="success-sub" id="successSub">Your account has been created successfully. You're now part of India's largest contract farming marketplace.</div>
+      <div class="success-actions">
+        <a href="dashboard-farmer.html" class="btn-dashboard" id="dashboardBtn">Go to My Dashboard →</a>
+        <a href="marketplace.html" class="btn-marketplace-link">Browse Contracts</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let currentRole = 'farmer';
+
+  function selectRole(role) {
+    currentRole = role;
+    document.getElementById('farmerCard').classList.toggle('selected', role === 'farmer');
+    document.getElementById('industryCard').classList.toggle('selected', role === 'industry');
+  }
+
+  function goToStep(step) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('successScreen').classList.remove('active');
+
+    if (step === 2) {
+      document.getElementById('step2Title').textContent = currentRole === 'farmer' ? 'Farmer Registration' : 'Industry Registration';
+    }
+    if (step === 3) {
+      document.getElementById('step3Title').textContent = currentRole === 'farmer' ? 'Farm Details' : 'Company Details';
+      document.getElementById('farmerFields').style.display = currentRole === 'farmer' ? 'block' : 'none';
+      document.getElementById('industryFields').style.display = currentRole === 'industry' ? 'block' : 'none';
+    }
+    document.getElementById('step' + step).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitForm() {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    const screen = document.getElementById('successScreen');
+    screen.classList.add('active');
+
+    if (currentRole === 'farmer') {
+      document.getElementById('successTitle').textContent = '🌱 Welcome, Farmer!';
+      document.getElementById('successSub').textContent = 'Your farm profile is ready. Start browsing contracts and apply to supply crops directly to verified industries.';
+      document.getElementById('dashboardBtn').href = 'dashboard-farmer.html';
+      document.getElementById('dashboardBtn').textContent = 'Go to Farmer Dashboard →';
+    } else {
+      document.getElementById('successTitle').textContent = '🏭 Welcome aboard!';
+      document.getElementById('successSub').textContent = 'Your company profile is ready. Post your first crop requirement and connect with thousands of farmers across India.';
+      document.getElementById('dashboardBtn').href = 'dashboard-industry.html';
+      document.getElementById('dashboardBtn').textContent = 'Go to Industry Dashboard →';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleCrop(el) { el.classList.toggle('selected'); }
+  function selectLand(el) {
+    document.querySelectorAll('.land-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function togglePassword() {
+    const inp = document.getElementById('passwordInput');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+  }
+
+  // Check URL param for pre-selected role
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('role') === 'industry') selectRole('industry');
+</script>
+</body>
+</html>

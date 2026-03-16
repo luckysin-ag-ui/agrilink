@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How It Works — AgriLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-deep:#1a3a2a; --green-mid:#2d6a4f; --green-fresh:#52b788;
+      --green-light:#95d5b2; --cream:#f8f4ed; --cream-dark:#ede8df;
+      --white:#ffffff; --text-dark:#1a2e1e; --text-mid:#3d5a47;
+      --text-light:#6b8f74; --gold:#c9a84c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(248,244,237,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(82,183,136,0.15);box-shadow:0 2px 20px rgba(26,58,42,0.06);}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+    .logo-icon{width:38px;height:38px;background:var(--green-mid);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .logo-text{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--green-deep);}
+    .logo-text span{color:var(--green-fresh);}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:14px;font-weight:500;color:var(--text-mid);transition:color 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--green-mid);}
+    .nav-cta{display:flex;gap:12px;}
+    .btn-outline{padding:9px 22px;border:1.5px solid var(--green-mid);border-radius:8px;background:transparent;color:var(--green-mid);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .btn-outline:hover{background:var(--green-mid);color:var(--white);}
+    .btn-solid{padding:9px 22px;border:none;border-radius:8px;background:var(--green-mid);color:var(--white);font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .btn-solid:hover{background:var(--green-deep);}
+
+    /* PAGE HERO */
+    .page-hero{margin-top:74px;background:var(--green-deep);padding:80px 60px;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(82,183,136,0.12) 0%,transparent 70%);}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(82,183,136,0.15);border:1px solid rgba(82,183,136,0.3);border-radius:100px;padding:6px 18px;font-size:13px;font-weight:500;color:var(--green-light);margin-bottom:20px;}
+    .page-title{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--white);letter-spacing:-2px;margin-bottom:16px;line-height:1.1;}
+    .page-title em{font-style:normal;color:var(--green-fresh);}
+    .page-sub{font-size:18px;color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto 40px;line-height:1.7;}
+
+    /* TAB SWITCHER */
+    .tab-switcher{display:inline-flex;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:5px;}
+    .tab-btn{padding:12px 32px;border:none;background:transparent;color:rgba(255,255,255,0.6);font-size:15px;font-weight:500;cursor:pointer;border-radius:10px;transition:all 0.25s;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;}
+    .tab-btn.active{background:var(--white);color:var(--green-deep);box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+
+    /* SECTIONS */
+    .section{padding:100px 60px;}
+    .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-fresh);margin-bottom:12px;}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:var(--green-deep);line-height:1.15;letter-spacing:-1px;margin-bottom:16px;}
+    .section-sub{font-size:16px;color:var(--text-mid);line-height:1.7;max-width:500px;}
+
+    /* STEPS TIMELINE */
+    .steps-panel{display:none;}
+    .steps-panel.active{display:block;animation:fadeIn 0.4s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .timeline{position:relative;padding:80px 60px;}
+    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--cream-dark);transform:translateX(-50%);}
+
+    .timeline-step{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-bottom:60px;align-items:center;}
+    .timeline-step:last-child{margin-bottom:0;}
+
+    .step-left{text-align:right;padding-right:40px;}
+    .step-right{padding-left:40px;}
+    .step-empty{} /* placeholder for alternating */
+
+    .step-node{width:60px;height:60px;border-radius:50%;background:var(--green-mid);display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;z-index:1;box-shadow:0 0 0 8px var(--cream),0 0 0 10px rgba(82,183,136,0.2);margin:0 auto;flex-shrink:0;}
+    .step-node.done{background:var(--green-fresh);}
+
+    .step-card{background:var(--white);border-radius:18px;padding:24px 28px;border:1px solid var(--cream-dark);transition:all 0.25s;}
+    .step-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(26,58,42,0.09);border-color:var(--green-light);}
+    .step-number{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green-fresh);margin-bottom:8px;}
+    .step-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green-deep);margin-bottom:8px;}
+    .step-desc{font-size:14px;color:var(--text-mid);line-height:1.7;}
+    .step-tip{display:flex;align-items:flex-start;gap:8px;background:rgba(82,183,136,0.06);border-radius:10px;padding:10px 14px;margin-top:14px;font-size:13px;color:var(--text-mid);}
+    .step-tip-icon{font-size:16px;flex-shrink:0;}
+
+    /* FEATURES GRID */
+    .features-section{background:var(--green-deep);padding:100px 60px;}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+    .feature-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px;transition:all 0.3s;}
+    .feature-card:hover{background:rgba(255,255,255,0.09);transform:translateY(-4px);border-color:rgba(82,183,136,0.3);}
+    .feature-icon{font-size:36px;margin-bottom:18px;display:block;}
+    .feature-title{font-size:18px;font-weight:600;color:var(--white);margin-bottom:10px;}
+    .feature-desc{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;}
+
+    /* FAQ */
+    .faq-section{padding:100px 60px;max-width:820px;margin:0 auto;}
+    .faq-item{border-bottom:1px solid var(--cream-dark);}
+    .faq-question{display:flex;justify-content:space-between;align-items:center;padding:22px 0;cursor:pointer;gap:20px;}
+    .faq-q-text{font-size:16px;font-weight:600;color:var(--text-dark);}
+    .faq-icon{width:32px;height:32px;border-radius:50%;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all 0.25s;}
+    .faq-item.open .faq-icon{background:var(--green-mid);color:white;transform:rotate(45deg);}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
+    .faq-item.open .faq-answer{max-height:200px;}
+    .faq-answer-inner{padding:0 0 20px;font-size:15px;color:var(--text-mid);line-height:1.7;}
+
+    /* COMPARISON TABLE */
+    .comparison-section{padding:80px 60px;background:var(--cream-dark);}
+    .comparison-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(26,58,42,0.06);}
+    .comparison-table th{padding:18px 24px;text-align:left;font-size:14px;font-weight:600;background:var(--green-deep);color:rgba(255,255,255,0.7);}
+    .comparison-table th:first-child{color:var(--white);}
+    .comparison-table th.highlight{background:var(--green-mid);color:var(--white);}
+    .comparison-table td{padding:16px 24px;font-size:14px;color:var(--text-mid);border-bottom:1px solid var(--cream-dark);}
+    .comparison-table tr:last-child td{border-bottom:none;}
+    .comparison-table td.highlight{background:rgba(82,183,136,0.04);font-weight:500;color:var(--text-dark);}
+    .check{color:var(--green-fresh);font-weight:700;font-size:16px;}
+    .cross{color:#ccc;}
+
+    /* CTA */
+    .cta-section{margin:0 60px 80px;background:var(--green-mid);border-radius:28px;padding:80px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);}
+    .cta-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--white);line-height:1.15;letter-spacing:-1px;}
+    .cta-sub{font-size:16px;color:rgba(255,255,255,0.7);margin-top:12px;line-height:1.7;}
+    .cta-buttons{display:flex;flex-direction:column;gap:14px;}
+    .btn-cta-white{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--white);border-radius:12px;text-decoration:none;transition:all 0.2s;}
+    .btn-cta-white:hover{transform:translateX(4px);}
+    .cta-btn-label{font-size:16px;font-weight:600;color:var(--green-deep);}
+    .cta-btn-sub{font-size:12px;color:var(--text-light);}
+    .btn-cta-ghost{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);border-radius:12px;text-decoration:none;transition:all 0.2s;}
+    .btn-cta-ghost:hover{background:rgba(255,255,255,0.18);transform:translateX(4px);}
+    .btn-cta-ghost .cta-btn-label{color:var(--white);}
+    .btn-cta-ghost .cta-btn-sub{color:rgba(255,255,255,0.6);}
+    .cta-arrow{font-size:20px;}
+    .btn-cta-white .cta-arrow{color:var(--green-mid);}
+    .btn-cta-ghost .cta-arrow{color:rgba(255,255,255,0.7);}
+
+    /* FOOTER */
+    footer{background:var(--green-deep);padding:60px 60px 30px;}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.08);}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-top:14px;max-width:260px;}
+    .footer-col-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:16px;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .footer-links a{font-size:14px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--green-light);}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;font-size:13px;color:rgba(255,255,255,0.4);}
+
+    /* CHATBOT */
+    .chatbot-fab{position:fixed;bottom:28px;right:28px;z-index:999;width:56px;height:56px;background:var(--green-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 30px rgba(45,106,79,0.4);transition:all 0.3s;border:none;font-size:24px;}
+    .chatbot-fab:hover{transform:scale(1.08);background:var(--green-deep);}
+    .chatbot-panel{position:fixed;bottom:96px;right:28px;z-index:998;width:360px;background:var(--white);border-radius:20px;box-shadow:0 20px 60px rgba(26,58,42,0.18);border:1px solid rgba(82,183,136,0.15);overflow:hidden;display:none;flex-direction:column;max-height:500px;}
+    .chatbot-panel.open{display:flex;}
+    .chat-header{background:var(--green-mid);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+    .chat-header-info{display:flex;align-items:center;gap:10px;}
+    .chat-avatar{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .chat-name{font-size:15px;font-weight:600;color:var(--white);}
+    .chat-status{font-size:12px;color:rgba(255,255,255,0.7);}
+    .chat-close-btn{background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;}
+    .chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
+    .msg{max-width:85%;}
+    .msg.bot{align-self:flex-start;}
+    .msg.user{align-self:flex-end;}
+    .msg-bubble{padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;}
+    .msg.bot .msg-bubble{background:var(--cream);color:var(--text-dark);border-bottom-left-radius:4px;}
+    .msg.user .msg-bubble{background:var(--green-mid);color:var(--white);border-bottom-right-radius:4px;}
+    .chat-input-wrap{padding:12px 16px;border-top:1px solid var(--cream-dark);display:flex;gap:8px;}
+    .chat-input{flex:1;padding:10px 14px;border:1.5px solid var(--cream-dark);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+    .chat-input:focus{border-color:var(--green-light);}
+    .chat-send{width:40px;height:40px;background:var(--green-mid);border:none;border-radius:10px;color:var(--white);font-size:16px;cursor:pointer;}
+    .typing{display:flex;gap:4px;align-items:center;}
+    .typing span{width:7px;height:7px;background:var(--text-light);border-radius:50%;animation:bounce 1.2s infinite;}
+    .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🌾</div>
+    <span class="logo-text">Agri<span>Link</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="how-it-works.html" class="active">How It Works</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="register.html" class="btn-solid">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📖 Simple. Transparent. Fair.</div>
+    <div class="page-title">How <em>AgriLink</em> Works</div>
+    <div class="page-sub">A simple, transparent process connecting farmers and industries — from registration to delivery and payment.</div>
+    <div class="tab-switcher">
+      <button class="tab-btn active" id="farmerTabBtn" onclick="switchPanel('farmer')">🌱 For Farmers</button>
+      <button class="tab-btn" id="industryTabBtn" onclick="switchPanel('industry')">🏭 For Industries</button>
+    </div>
+  </div>
+</div>
+
+<!-- FARMER STEPS -->
+<div id="farmerPanel" class="steps-panel active">
+  <div class="timeline">
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 01</div>
+          <div class="step-title">Create Your Farm Profile</div>
+          <div class="step-desc">Sign up for free and build your farm profile. Add your location, land size, crops you grow, and expected annual production. This helps industries find and match with you.</div>
+          <div class="step-tip"><span class="step-tip-icon">💡</span>The more detailed your profile, the more contract matches you'll receive.</div>
+        </div>
+      </div>
+      <div class="step-node done">🌱</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node done">🔍</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 02</div>
+          <div class="step-title">Browse the Contract Marketplace</div>
+          <div class="step-desc">Explore hundreds of active contracts posted by verified food companies, exporters and retailers across India. Filter by crop type, region, price and delivery timeline to find the best fit.</div>
+          <div class="step-tip"><span class="step-tip-icon">🤖</span>Our AI assistant can suggest contracts perfectly matched to your farm and crops.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 03</div>
+          <div class="step-title">Apply to Supply</div>
+          <div class="step-desc">Found a contract that matches? Apply directly with a single click. Share your farm details, production capacity and any questions you have. No agents, no brokers — direct connection.</div>
+          <div class="step-tip"><span class="step-tip-icon">✉️</span>You can apply to multiple contracts at the same time.</div>
+        </div>
+      </div>
+      <div class="step-node done">📝</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node done">💬</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 04</div>
+          <div class="step-title">Negotiate & Finalize Terms</div>
+          <div class="step-desc">Once a company shortlists you, connect via our built-in messaging system. Discuss quantity, quality requirements, delivery schedules and pricing. Share documents and certifications securely.</div>
+          <div class="step-tip"><span class="step-tip-icon">🤝</span>Our AI assistant can help you understand complex contract terms in simple language.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 05</div>
+          <div class="step-title">Sign Digital Contract</div>
+          <div class="step-desc">Agree on terms and sign a digital contract directly on the platform. The contract clearly outlines crop quality, quantity, price, delivery location and payment timeline — protecting both parties.</div>
+          <div class="step-tip"><span class="step-tip-icon">🔒</span>All contracts are stored securely and accessible from your dashboard.</div>
+        </div>
+      </div>
+      <div class="step-node">📜</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node">🚚</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 06</div>
+          <div class="step-title">Grow, Harvest & Deliver</div>
+          <div class="step-desc">Grow your crop as per the agreed quality standards. Track your delivery schedule from your dashboard. Coordinate pickup or delivery with the company using the built-in delivery tracker.</div>
+          <div class="step-tip"><span class="step-tip-icon">📊</span>The AI assistant gives crop-specific advice to meet quality requirements.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 07</div>
+          <div class="step-title">Get Paid — Guaranteed</div>
+          <div class="step-desc">Once delivery is confirmed, payment is released directly to your bank account. Our escrow system ensures you're paid on time, every time. No more delayed payments or disputes.</div>
+          <div class="step-tip"><span class="step-tip-icon">💰</span>Payments are processed within 48 hours of confirmed delivery.</div>
+        </div>
+      </div>
+      <div class="step-node">💰</div>
+      <div class="step-empty"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INDUSTRY STEPS -->
+<div id="industryPanel" class="steps-panel">
+  <div class="timeline">
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 01</div>
+          <div class="step-title">Register Your Company</div>
+          <div class="step-desc">Create a verified company profile on AgriLink. Add your company details, GST number, industry type and procurement requirements. Verification gives you a trusted badge visible to all farmers.</div>
+          <div class="step-tip"><span class="step-tip-icon">✔</span>Verified companies get 3x more farmer applications.</div>
+        </div>
+      </div>
+      <div class="step-node done">🏭</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node done">📋</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 02</div>
+          <div class="step-title">Post Your Crop Requirements</div>
+          <div class="step-desc">Create a detailed contract listing specifying crop type, quality grade, quantity needed, price you're offering, preferred regions and delivery deadline. Your listing goes live immediately to 2,400+ farmers.</div>
+          <div class="step-tip"><span class="step-tip-icon">💡</span>Clear quality requirements attract better-matched farmers.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 03</div>
+          <div class="step-title">Review Farmer Applications</div>
+          <div class="step-desc">Farmers from across India will apply to your contract. Review each application with full farm details — land size, crop history, certifications, ratings and production capacity. All in one place.</div>
+          <div class="step-tip"><span class="step-tip-icon">🤖</span>Our AI ranks applications by best match to your requirements automatically.</div>
+        </div>
+      </div>
+      <div class="step-node done">👥</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node done">💬</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 04</div>
+          <div class="step-title">Connect & Negotiate</div>
+          <div class="step-desc">Shortlist promising farmers and connect via our secure messaging system. Discuss terms, verify certifications, share contract documents and finalize the deal — all within the platform.</div>
+          <div class="step-tip"><span class="step-tip-icon">📁</span>Share PDF contracts, certification documents and photos securely in chat.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 05</div>
+          <div class="step-title">Select & Sign Agreement</div>
+          <div class="step-desc">Select the best-fit farmers for your contract and finalize digital agreements. The signed contract is stored on the platform and accessible to both parties at any time.</div>
+          <div class="step-tip"><span class="step-tip-icon">🔒</span>You can select multiple farmers to meet large quantity requirements.</div>
+        </div>
+      </div>
+      <div class="step-node">📜</div>
+      <div class="step-empty"></div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-empty"></div>
+      <div class="step-node">🗺️</div>
+      <div class="step-right">
+        <div class="step-card">
+          <div class="step-number">Step 06</div>
+          <div class="step-title">Track & Monitor Deliveries</div>
+          <div class="step-desc">Monitor all your active contracts from your industry dashboard. Track crop growing progress, delivery schedules and quality reports. Get alerts when farmers are ready for pickup or delivery.</div>
+          <div class="step-tip"><span class="step-tip-icon">📊</span>Analytics dashboard shows your supply coverage and procurement spend.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="step-left">
+        <div class="step-card">
+          <div class="step-number">Step 07</div>
+          <div class="step-title">Confirm & Release Payment</div>
+          <div class="step-desc">Inspect delivered crops, confirm quality and approve the delivery on the platform. Payment is automatically released to the farmer from escrow. Build a reliable, repeat supply chain over time.</div>
+          <div class="step-tip"><span class="step-tip-icon">🤝</span>Satisfied farmers become long-term reliable suppliers for your business.</div>
+        </div>
+      </div>
+      <div class="step-node">✅</div>
+      <div class="step-empty"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PLATFORM FEATURES -->
+<div class="features-section">
+  <div style="text-align:center;margin-bottom:8px">
+    <div class="section-label" style="color:var(--green-light)">Built-in Tools</div>
+    <div class="section-title" style="color:var(--white);max-width:560px;margin:0 auto">Everything You Need to Succeed</div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🤖</span>
+      <div class="feature-title">AI Smart Assistant</div>
+      <div class="feature-desc">24/7 chatbot that explains contracts, suggests crops, helps find farmers and guides you through every step of the process.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💬</span>
+      <div class="feature-title">Secure Messaging</div>
+      <div class="feature-desc">Private chat with file sharing so farmers and industries can negotiate, share documents and build trust before signing.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📜</span>
+      <div class="feature-title">Digital Contracts</div>
+      <div class="feature-desc">Legally structured digital agreements that clearly define terms, protecting both farmers and industry buyers throughout the deal.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🚚</span>
+      <div class="feature-title">Delivery Tracker</div>
+      <div class="feature-desc">Step-by-step visual delivery tracker showing contract status from signing all the way to payment confirmation.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💰</span>
+      <div class="feature-title">Payment Escrow</div>
+      <div class="feature-desc">Funds held in escrow until delivery is confirmed — giving farmers confidence they will be paid and industries assurance of delivery.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🗺️</span>
+      <div class="feature-title">Farmer Location Map</div>
+      <div class="feature-desc">Interactive map showing registered farmers by region, crop type and availability — helping industries find nearby suppliers fast.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="comparison-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto 48px">
+    <div class="section-label">Why AgriLink?</div>
+    <div class="section-title" style="max-width:100%">AgriLink vs Traditional System</div>
+    <div class="section-sub" style="max-width:100%;text-align:center">See how AgriLink compares to the old way of doing agricultural trade in India.</div>
+  </div>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th class="highlight">✅ AgriLink</th>
+        <th>Traditional Mandi / Middlemen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Price Transparency</td><td class="highlight"><span class="check">✓</span> Fully transparent prices</td><td><span class="cross">✗</span> Hidden margins, unclear pricing</td></tr>
+      <tr><td>Middlemen</td><td class="highlight"><span class="check">✓</span> Zero middlemen</td><td><span class="cross">✗</span> Multiple agents take commission</td></tr>
+      <tr><td>Contract Protection</td><td class="highlight"><span class="check">✓</span> Digital signed agreements</td><td><span class="cross">✗</span> Verbal or informal contracts</td></tr>
+      <tr><td>Payment Guarantee</td><td class="highlight"><span class="check">✓</span> Escrow, paid in 48 hrs</td><td><span class="cross">✗</span> Often delayed or disputed</td></tr>
+      <tr><td>Market Access</td><td class="highlight"><span class="check">✓</span> National reach, 2,400+ farmers</td><td><span class="cross">✗</span> Limited to local area</td></tr>
+      <tr><td>AI Support</td><td class="highlight"><span class="check">✓</span> 24/7 AI guidance</td><td><span class="cross">✗</span> No guidance available</td></tr>
+      <tr><td>Cost to Join</td><td class="highlight"><span class="check">✓</span> Free for farmers</td><td><span class="cross">✗</span> Commission fees on every deal</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div style="text-align:center;margin-bottom:48px">
+    <div class="section-label">Common Questions</div>
+    <div class="section-title">Frequently Asked Questions</div>
+  </div>
+
+  <div class="faq-item open">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Is AgriLink free for farmers?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">Yes! AgriLink is completely free for farmers to register, browse contracts and apply. We believe every farmer deserves access to fair markets without paying upfront fees. Industry buyers pay a small platform fee only when a deal is successfully completed.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How does AgriLink verify industries and buyers?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">All industry buyers go through a verification process where we check their GST registration, company documents and business credentials. Verified companies display a blue checkmark on their profile, giving farmers confidence that they're dealing with legitimate buyers.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What happens if a company doesn't pay after delivery?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">Our payment escrow system holds the buyer's payment before the contract begins. Once the farmer delivers and the delivery is confirmed, the payment is automatically released. This means the money is already secured before the farmer even starts growing.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Can small farmers with limited land also join?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">Absolutely! AgriLink welcomes farmers of all sizes, including those with under 1 acre of land. Many contracts accept smaller quantities, and we're building a feature for farmers to group together for larger contracts. Every farmer deserves a fair marketplace.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Is the platform available in regional languages?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">We are actively working on adding Assamese, Bengali, Hindi and other regional languages to make the platform accessible to farmers across all regions of India. The AI assistant can already communicate in multiple languages — just type or speak in your preferred language.</div></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How does the AI assistant help farmers?</span>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-answer"><div class="faq-answer-inner">The AI assistant can explain contract terms in simple language, suggest which crops have high market demand, help you find contracts that match your farm's location and crops, answer questions about the platform, and provide guidance on quality requirements. It's available 24/7 at the bottom right of every page.</div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div>
+    <div class="cta-title">Ready to Get Started?</div>
+    <p class="cta-sub">Join thousands of farmers and industries building better agricultural supply chains together.</p>
+  </div>
+  <div class="cta-buttons">
+    <a href="register.html?role=farmer" class="btn-cta-white">
+      <div><div class="cta-btn-label">🌱 Join as Farmer</div><div class="cta-btn-sub">Register your farm for free</div></div>
+      <span class="cta-arrow">→</span>
+    </a>
+    <a href="register.html?role=industry" class="btn-cta-ghost">
+      <div><div class="cta-btn-label">🏭 Join as Industry</div><div class="cta-btn-sub">Post your crop requirements</div></div>
+      <span class="cta-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none">
+        <div class="logo-icon">🌾</div>
+        <span class="logo-text" style="color:var(--white)">Agri<span style="color:var(--green-light)">Link</span></span>
+      </a>
+      <p>India's first dedicated contract farming marketplace connecting farmers directly with food industries.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Farmers</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=farmer">Register Farm</a></li>
+        <li><a href="marketplace.html">Browse Contracts</a></li>
+        <li><a href="dashboard-farmer.html">Dashboard</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">For Industries</div>
+      <ul class="footer-links">
+        <li><a href="register.html?role=industry">Register Company</a></li>
+        <li><a href="dashboard-industry.html">Post a Contract</a></li>
+        <li><a href="dashboard-industry.html">Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AgriLink. All rights reserved.</span>
+    <span>Made with 🌾 for Indian Farmers</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-fab" id="chatFab">🤖</button>
+<div class="chatbot-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🤖</div>
+      <div><div class="chat-name">AgriLink Assistant</div><div class="chat-status">● Online</div></div>
+    </div>
+    <button class="chat-close-btn" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot"><div class="msg-bubble">👋 Have questions about how AgriLink works? I'm here to help!</div></div>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..."/>
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+  function switchPanel(role) {
+    document.querySelectorAll('.steps-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(role + 'Panel').classList.add('active');
+    document.getElementById(role + 'TabBtn').classList.add('active');
+  }
+
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Chatbot
+  document.getElementById('chatFab').addEventListener('click', () => document.getElementById('chatPanel').classList.toggle('open'));
+  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatPanel').classList.remove('open'));
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim(); if (!text) return;
+    input.value = '';
+    const msgs = document.getElementById('chatMessages');
+    msgs.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
+    const tid = 't' + Date.now();
+    msgs.innerHTML += `<div class="msg bot" id="${tid}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514', max_tokens:800,
+          system:'You are AgriLink AI assistant on the How It Works page. Answer questions about how the platform works, the registration process, contracts, payments, and features. Keep responses simple and friendly.',
+          messages:[{role:'user',content:text}]
+        })
+      });
+      const data = await res.json();
+      document.getElementById(tid).remove();
+      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">${data.content?.[0]?.text||'Sorry, try again.'}</div></div>`;
+    } catch {
+      document.getElementById(tid).remove();
+      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">Something went wrong. Please try again.</div></div>`;
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  document.getElementById('chatSend').addEventListener('click', sendMessage);
+  document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key==='Enter') sendMessage(); });
+</script>
+</body>
+</html>
