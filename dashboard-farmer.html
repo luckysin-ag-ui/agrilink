@@ -295,7 +295,7 @@
   </div>
 
   <div class="sidebar-bottom">
-    <button class="btn-logout" onclick="window.location='login.html'">🚪 <span>Logout</span></button>
+    <button class="btn-logout" onclick="logoutUser()">🚪 <span>Logout</span></button>
   </div>
 </aside>
 
@@ -708,6 +708,19 @@
 </div>
 
 <script>
+  // Load real user data
+  const user = getCurrentUser();
+  if (!user) {
+    window.location.href = 'login.html';
+  } else {
+    // Update sidebar user info
+    document.querySelector('.user-name').textContent = user.full_name;
+    document.querySelector('.user-role').textContent = user.state || 'India';
+    // Update topbar greeting
+    const firstName = user.full_name.split(' ')[0];
+    document.querySelector('.topbar-greeting').textContent = `Good morning, ${firstName} 👋`;
+  }
+
   // Tab switching
   function showTab(name, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -791,5 +804,6 @@
   document.getElementById('cbSend').addEventListener('click', sendCb);
   document.getElementById('cbInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendCb(); });
 </script>
+<script src="api.js"></script>
 </body>
 </html>
