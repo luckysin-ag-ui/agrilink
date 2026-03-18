@@ -680,16 +680,15 @@
         <div style="padding:28px;display:grid;grid-template-columns:160px 1fr;gap:36px;align-items:start">
           <div style="text-align:center">
             <div style="width:90px;height:90px;background:rgba(201,168,76,0.12);border-radius:16px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:44px">🏭</div>
-            <div style="font-weight:700;font-size:15px">ITC Agribusiness</div>
-            <div style="font-size:13px;color:var(--text-light);margin-top:4px">Mumbai, MH</div>
+            <div style="font-weight:700;font-size:15px" id="industryProfileName">Loading...</div>
+            <div style="font-size:13px;color:var(--text-light);margin-top:4px" id="industryProfileState">India</div>
             <div style="margin-top:10px;background:rgba(82,183,136,0.1);border-radius:8px;padding:8px;font-size:13px;color:var(--green-mid)">✔ Verified Buyer</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Industry Type</div><div style="font-size:15px;font-weight:500">Food Processing</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Company Size</div><div style="font-size:15px;font-weight:500">Large (5,000+ employees)</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">GST Number</div><div style="font-size:15px;font-weight:500">27AAACI0038H1ZS</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Member Since</div><div style="font-size:15px;font-weight:500">January 2026</div></div>
-            <div style="grid-column:1/-1"><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:8px">Crops Required</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🍅 Tomato</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🌽 Maize</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🌾 Rice</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🌿 Tea</span></div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Mobile</div><div style="font-size:15px;font-weight:500" id="industryProfileMobile">—</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">State</div><div style="font-size:15px;font-weight:500" id="industryProfileState2">—</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Account Type</div><div style="font-size:15px;font-weight:500">🏭 Industry</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Member Since</div><div style="font-size:15px;font-weight:500">2026</div></div>
           </div>
         </div>
       </div>
@@ -773,9 +772,19 @@
     document.querySelector('.user-role').textContent = user.state || 'India';
     const firstName = user.full_name.split(' ')[0];
     document.querySelector('.topbar-greeting').textContent = `Good morning, ${firstName} 👋`;
+
     // Update chatbot greeting
     const cbMsg = document.querySelector('.cb-bubble');
     if (cbMsg) cbMsg.textContent = `Hello ${firstName}! How can I help with your procurement today? 🌾`;
+
+    // Update profile tab with real data
+    document.getElementById('industryProfileName').textContent = user.full_name;
+    document.getElementById('industryProfileState').textContent = user.state || 'India';
+    document.getElementById('industryProfileMobile').textContent = user.mobile || '—';
+    document.getElementById('industryProfileState2').textContent = user.state || '—';
+
+    // Store user globally for AI
+    window.CURRENT_USER = user;
   });
 
   function showTab(name, btn) {
@@ -817,12 +826,15 @@
     const tid = 'ai_' + Date.now();
     msgs.innerHTML += `<div id="${tid}" style="align-self:flex-start;background:var(--cream);padding:10px 14px;border-radius:12px;font-size:14px;max-width:80%"><div class="typing"><span></span><span></span><span></span></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
+    const user = window.CURRENT_USER || getCurrentUser();
+    const userName = user ? user.full_name : 'Industry Buyer';
+    const userState = user ? (user.state || 'India') : 'India';
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           model:'claude-sonnet-4-20250514', max_tokens:1000,
-          system:`You are AgriLink's AI assistant helping ITC Agribusiness, a large food processing company in Mumbai that sources Tomato, Maize, Rice and Tea from farmers across India. Help them find farmers, set fair prices, write good contracts, and manage their supply chain. Keep responses practical and concise.`,
+          system:`You are AgriLink's AI assistant helping ${userName}, an industry buyer from ${userState}. Help them find farmers, set fair prices, write good contracts, and manage their supply chain. Keep responses practical and concise. Always address them by their first name.`,
           messages:[{role:'user',content:text}]
         })
       });
@@ -850,12 +862,15 @@
     const tid = 'cb_' + Date.now();
     msgs.innerHTML += `<div class="cb-msg bot" id="${tid}"><div class="cb-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
+    const user = window.CURRENT_USER || getCurrentUser();
+    const userName = user ? user.full_name : 'Industry Buyer';
+    const userState = user ? (user.state || 'India') : 'India';
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           model:'claude-sonnet-4-20250514', max_tokens:600,
-          system:'You are AgriLink AI helping ITC Agribusiness find and manage farmers. Be concise and professional.',
+          system:`You are AgriLink AI helping ${userName}, an industry buyer from ${userState}. Be concise and professional. Always address them by their first name.`,
           messages:[{role:'user',content:text}]
         })
       });

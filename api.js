@@ -25,14 +25,14 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 async function registerUser(userData) {
   const data = await apiCall('/api/register', 'POST', userData);
   localStorage.setItem('agrilink_token', data.token);
-  localStorage.setItem('agrilink_user', JSON.stringify(data.user));
+  localStorage.setItem('agrilink_user', JSON.stringify({...data.user, mobile: userData.mobile}));
   return data;
 }
 
 async function loginUser(mobile, password) {
   const data = await apiCall('/api/login', 'POST', { mobile, password });
   localStorage.setItem('agrilink_token', data.token);
-  localStorage.setItem('agrilink_user', JSON.stringify(data.user));
+  localStorage.setItem('agrilink_user', JSON.stringify({...data.user, mobile}));
   return data;
 }
 
