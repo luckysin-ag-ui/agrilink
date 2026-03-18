@@ -707,19 +707,25 @@
   </div>
 </div>
 
+<script src="api.js"></script>
 <script>
   // Load real user data
-  const user = getCurrentUser();
-  if (!user) {
-    window.location.href = 'login.html';
-  } else {
+  window.addEventListener('DOMContentLoaded', function() {
+    const user = getCurrentUser();
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
     // Update sidebar user info
     document.querySelector('.user-name').textContent = user.full_name;
     document.querySelector('.user-role').textContent = user.state || 'India';
     // Update topbar greeting
     const firstName = user.full_name.split(' ')[0];
     document.querySelector('.topbar-greeting').textContent = `Good morning, ${firstName} 👋`;
-  }
+    // Update chatbot greeting
+    const cbMsg = document.querySelector('.cb-bubble');
+    if (cbMsg) cbMsg.textContent = `Hi ${firstName}! How can I help you today? 🌾`;
+  });
 
   // Tab switching
   function showTab(name, btn) {
@@ -804,6 +810,5 @@
   document.getElementById('cbSend').addEventListener('click', sendCb);
   document.getElementById('cbInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendCb(); });
 </script>
-<script src="api.js"></script>
 </body>
 </html>
