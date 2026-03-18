@@ -651,16 +651,15 @@
         <div style="padding:28px;display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start">
           <div style="text-align:center">
             <div style="width:100px;height:100px;background:rgba(82,183,136,0.12);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:48px">👨‍🌾</div>
-            <div style="font-weight:600;font-size:16px">Ravi Kumar</div>
-            <div style="font-size:13px;color:var(--text-light);margin-top:4px">Sipajhar, Assam</div>
-            <div style="margin-top:10px;background:rgba(82,183,136,0.1);border-radius:8px;padding:8px;font-size:13px;color:var(--green-mid)">⭐ 4.8 Rating</div>
+            <div style="font-weight:600;font-size:16px" id="profileName">Loading...</div>
+            <div style="font-size:13px;color:var(--text-light);margin-top:4px" id="profileState">India</div>
+            <div style="margin-top:10px;background:rgba(82,183,136,0.1);border-radius:8px;padding:8px;font-size:13px;color:var(--green-mid)">⭐ Verified Farmer</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Mobile</div><div style="font-size:15px;font-weight:500">+91 94350 12345</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">State</div><div style="font-size:15px;font-weight:500">Assam</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Land Size</div><div style="font-size:15px;font-weight:500">5 Acres</div></div>
-            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Annual Production</div><div style="font-size:15px;font-weight:500">~12 Metric Tons</div></div>
-            <div style="grid-column:1/-1"><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:8px">Crops Grown</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🌿 Tea</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🫚 Ginger</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🌽 Maize</span><span style="background:rgba(82,183,136,0.1);border:1px solid rgba(82,183,136,0.2);border-radius:100px;padding:5px 14px;font-size:13px;color:var(--green-mid)">🥦 Vegetables</span></div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Mobile</div><div style="font-size:15px;font-weight:500" id="profileMobile">—</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">State</div><div style="font-size:15px;font-weight:500" id="profileState2">—</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Member Since</div><div style="font-size:15px;font-weight:500">2026</div></div>
+            <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:4px">Account Type</div><div style="font-size:15px;font-weight:500">🌱 Farmer</div></div>
           </div>
         </div>
       </div>
@@ -716,15 +715,27 @@
       window.location.href = 'login.html';
       return;
     }
-    // Update sidebar user info
+
+    // Update sidebar
     document.querySelector('.user-name').textContent = user.full_name;
     document.querySelector('.user-role').textContent = user.state || 'India';
+
     // Update topbar greeting
     const firstName = user.full_name.split(' ')[0];
     document.querySelector('.topbar-greeting').textContent = `Good morning, ${firstName} 👋`;
+
     // Update chatbot greeting
     const cbMsg = document.querySelector('.cb-bubble');
     if (cbMsg) cbMsg.textContent = `Hi ${firstName}! How can I help you today? 🌾`;
+
+    // Update profile tab with real data
+    document.getElementById('profileName').textContent = user.full_name;
+    document.getElementById('profileState').textContent = user.state || 'India';
+    document.getElementById('profileMobile').textContent = user.mobile || '—';
+    document.getElementById('profileState2').textContent = user.state || '—';
+
+    // Store user globally for AI
+    window.CURRENT_USER = user;
   });
 
   // Tab switching
@@ -756,12 +767,15 @@
     const tid = 'ai_' + Date.now();
     msgs.innerHTML += `<div id="${tid}" style="align-self:flex-start;background:var(--cream);padding:10px 14px;border-radius:12px;font-size:14px;max-width:80%;border-bottom-left-radius:3px"><div class="typing"><span></span><span></span><span></span></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
+    const user = window.CURRENT_USER || getCurrentUser();
+    const userName = user ? user.full_name : 'Farmer';
+    const userState = user ? (user.state || 'India') : 'India';
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           model:'claude-sonnet-4-20250514', max_tokens:1000,
-          system:`You are AgriLink's AI assistant helping Ravi Kumar, a farmer from Sipajhar, Assam who grows Tea, Ginger, Maize and Vegetables on 5 acres. Help him find contracts, understand terms, and make smart farming decisions. Keep responses concise and practical.`,
+          system:`You are AgriLink's AI assistant helping ${userName}, a farmer from ${userState}. Help them find contracts, understand terms, and make smart farming decisions. Keep responses concise and practical. Always address them by their first name.`,
           messages:[{role:'user',content:text}]
         })
       });
@@ -789,12 +803,15 @@
     const tid = 'cb_' + Date.now();
     msgs.innerHTML += `<div class="cb-msg bot" id="${tid}"><div class="cb-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
+    const user = window.CURRENT_USER || getCurrentUser();
+    const userName = user ? user.full_name : 'Farmer';
+    const userState = user ? (user.state || 'India') : 'India';
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
           model:'claude-sonnet-4-20250514', max_tokens:600,
-          system:'You are AgriLink AI assistant helping an Assam farmer named Ravi. Be friendly and concise.',
+          system:`You are AgriLink AI assistant helping ${userName}, a farmer from ${userState}. Be friendly and concise. Always address them by their first name.`,
           messages:[{role:'user',content:text}]
         })
       });
