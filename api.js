@@ -265,19 +265,22 @@ function initFloatingChatbot() {
 
   const cbSend = document.getElementById('cbSend');
   const cbInput = document.getElementById('cbInput');
-  const cbFab = document.getElementById('chatFab');
-  const cbPanel = document.getElementById('chatPanel');
+  const cbFab = document.getElementById('chatFab') || document.getElementById('cbFab');
+  const cbPanel = document.getElementById('chatPanel') || document.getElementById('cbPanel');
   const cbClose = document.getElementById('chatClose') || document.getElementById('cbClose');
 
-  if (cbSend) cbSend.addEventListener('click', sendCbMessage);
-  if (cbInput) cbInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendCbMessage(); });
-  if (cbFab) cbFab.addEventListener('click', () => cbPanel.classList.toggle('open'));
-  if (cbClose) cbClose.addEventListener('click', () => cbPanel.classList.remove('open'));
+  if (cbSend) cbSend.onclick = sendCbMessage;
+  if (cbInput) {
+    cbInput.onkeydown = e => { if (e.key === 'Enter') sendCbMessage(); };
+  }
+  if (cbFab && cbPanel) cbFab.onclick = () => cbPanel.classList.toggle('open');
+  if (cbClose && cbPanel) cbClose.onclick = () => cbPanel.classList.remove('open');
 }
 
 // ── AUTO INIT ON PAGE LOAD ──
 document.addEventListener('DOMContentLoaded', function() {
   updateNavbar();
+  // Auto-init chatbot if panel exists on the page
   if (document.getElementById('cbMessages')) {
     initFloatingChatbot();
   }

@@ -830,8 +830,7 @@
   document.getElementById('aiInp').addEventListener('keydown', e => { if (e.key==='Enter') sendAI(); });
 
   // Chatbot FAB
-  document.getElementById('cbFab').addEventListener('click', () => document.getElementById('cbPanel').classList.toggle('open'));
-  document.getElementById('cbClose').addEventListener('click', () => document.getElementById('cbPanel').classList.remove('open'));
+  // Chatbot handled by api.js
   async function sendCb() {
     const inp = document.getElementById('cbInput');
     const text = inp.value.trim(); if (!text) return;
