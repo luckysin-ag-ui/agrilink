@@ -1183,64 +1183,32 @@
   </div>
 </div>
 
+<script src="api.js"></script>
 <script>
   // Navbar scroll effect
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
   });
 
-  // Chatbot toggle
-  const fab = document.getElementById('chatFab');
-  const panel = document.getElementById('chatPanel');
-  const closeBtn = document.getElementById('chatClose');
-  fab.addEventListener('click', () => panel.classList.toggle('open'));
-  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+  // Override chatbot IDs to match index.html naming
+  document.addEventListener('DOMContentLoaded', function() {
+    // Map index.html chatbot IDs to the ones api.js expects
+    const chatFab = document.getElementById('chatFab');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatClose = document.getElementById('chatClose');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatMessages = document.getElementById('chatMessages');
 
-  // Chat send
-  const input = document.getElementById('chatInput');
-  const sendBtn = document.getElementById('chatSend');
-  const messages = document.getElementById('chatMessages');
+    // Rename IDs to match api.js initFloatingChatbot expectations
+    if (chatMessages) chatMessages.id = 'cbMessages';
+    if (chatInput) chatInput.id = 'cbInput';
+    if (chatSend) chatSend.id = 'cbSend';
+    if (chatClose) chatClose.id = 'cbClose';
 
-  async function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-
-    // User message
-    messages.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
-
-    // Typing indicator
-    const typingId = 'typing_' + Date.now();
-    messages.innerHTML += `<div class="msg bot" id="${typingId}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
-    messages.scrollTop = messages.scrollHeight;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: `You are AgriLink's AI assistant — a helpful guide for an Indian contract farming marketplace. 
-Help farmers understand contract terms, suggest crops based on market demand, help industries find farmers, 
-and guide users through the platform. Keep responses concise, friendly and practical. 
-Use simple language suitable for Indian farmers. Respond in English unless asked otherwise.`,
-          messages: [{ role: 'user', content: text }]
-        })
-      });
-      const data = await res.json();
-      const reply = data.content?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
-      document.getElementById(typingId).remove();
-      messages.innerHTML += `<div class="msg bot"><div class="msg-bubble">${reply}</div></div>`;
-    } catch (e) {
-      document.getElementById(typingId).remove();
-      messages.innerHTML += `<div class="msg bot"><div class="msg-bubble">Sorry, something went wrong. Please try again later.</div></div>`;
-    }
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  sendBtn.addEventListener('click', sendMessage);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+    // Init the smart chatbot
+    initFloatingChatbot('👋 Hi! I\'m AgriLink\'s AI assistant. I can help you find contracts, understand how the platform works, match farmers with buyers, and answer any questions. What can I help you with?');
+  });
 </script>
 </body>
 </html>

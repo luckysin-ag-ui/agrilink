@@ -223,7 +223,7 @@
         <div class="contact-card-icon green">📧</div>
         <div>
           <div class="contact-card-title">Email Us</div>
-          <div class="contact-card-value"><a href="mailto:hello@agrilink.in">hello@agrilink.in</a></div>
+          <div class="contact-card-value"><a href="/cdn-cgi/l/email-protection#caa2afa6a6a58aabadb8a3a6a3a4a1e4a3a4"><span class="__cf_email__" data-cfemail="1179747d7d7e51707663787d787f7a3f787f">[email&#160;protected]</span></a></div>
           <div class="contact-card-sub">For general inquiries and support</div>
         </div>
       </div>
@@ -498,7 +498,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function selectRole(btn) {
     document.querySelectorAll('.role-choice').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
@@ -549,39 +549,18 @@
     document.getElementById('submitText').textContent = 'Send Message 📬';
   }
 
-  // Chatbot
-  document.getElementById('chatFab').addEventListener('click', () => document.getElementById('chatPanel').classList.toggle('open'));
-  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatPanel').classList.remove('open'));
-
-  async function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const text = input.value.trim(); if (!text) return;
-    input.value = '';
+  // Chatbot - handled by api.js
+  document.addEventListener('DOMContentLoaded', function() {
     const msgs = document.getElementById('chatMessages');
-    msgs.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
-    const tid = 't' + Date.now();
-    msgs.innerHTML += `<div class="msg bot" id="${tid}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
-    msgs.scrollTop = msgs.scrollHeight;
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514', max_tokens: 800,
-          system: 'You are AgriLink AI support assistant on the Contact page. Help users with their questions, direct them to the right team, and resolve common issues. AgriLink is an Indian contract farming marketplace. Email: hello@agrilink.in, Phone: +91 94350 12345. Be friendly and helpful.',
-          messages: [{ role: 'user', content: text }]
-        })
-      });
-      const data = await res.json();
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">${data.content?.[0]?.text || 'Sorry, try again.'}</div></div>`;
-    } catch {
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div class="msg bot"><div class="msg-bubble">Something went wrong. Please try again.</div></div>`;
-    }
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-  document.getElementById('chatSend').addEventListener('click', sendMessage);
-  document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-</script>
+    const inp = document.getElementById('chatInput');
+    const snd = document.getElementById('chatSend');
+    const cls = document.getElementById('chatClose');
+    if (msgs) msgs.id = 'cbMessages';
+    if (inp) inp.id = 'cbInput';
+    if (snd) snd.id = 'cbSend';
+    if (cls) cls.id = 'cbClose';
+    initFloatingChatbot('👋 Hi! Need help? I can answer most questions instantly — or help you reach the right team. What\'s on your mind?');
+  });</script>
+<script src="api.js"></script>
 </body>
 </html>

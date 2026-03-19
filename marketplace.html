@@ -7,231 +7,157 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --green-deep: #1a3a2a;
-      --green-mid: #2d6a4f;
-      --green-fresh: #52b788;
-      --green-light: #95d5b2;
-      --earth: #a0522d;
-      --earth-light: #d4a574;
-      --cream: #f8f4ed;
-      --cream-dark: #ede8df;
-      --white: #ffffff;
-      --text-dark: #1a2e1e;
-      --text-mid: #3d5a47;
-      --text-light: #6b8f74;
-      --gold: #c9a84c;
-      --red: #e05c5c;
+      --green-deep: #1a3a2a; --green-mid: #2d6a4f; --green-fresh: #52b788;
+      --green-light: #95d5b2; --cream: #f8f4ed; --cream-dark: #ede8df;
+      --white: #ffffff; --text-dark: #1a2e1e; --text-mid: #3d5a47;
+      --text-light: #6b8f74; --gold: #c9a84c; --red: #e05c5c;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 60px;
-      background: rgba(248,244,237,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(82,183,136,0.15);
-      box-shadow: 0 2px 20px rgba(26,58,42,0.06);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-icon { width: 38px; height: 38px; background: var(--green-mid); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-    .logo-text { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--green-deep); }
-    .logo-text span { color: var(--green-fresh); }
-    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text-mid); transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--green-mid); }
-    .nav-cta { display: flex; gap: 12px; }
-    .btn-outline { padding: 9px 22px; border: 1.5px solid var(--green-mid); border-radius: 8px; background: transparent; color: var(--green-mid); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
-    .btn-outline:hover { background: var(--green-mid); color: var(--white); }
-    .btn-solid { padding: 9px 22px; border: none; border-radius: 8px; background: var(--green-mid); color: var(--white); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
-    .btn-solid:hover { background: var(--green-deep); }
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 60px; background:rgba(248,244,237,0.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(82,183,136,0.15); box-shadow:0 2px 20px rgba(26,58,42,0.06); }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-icon { width:38px; height:38px; background:var(--green-mid); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--green-deep); }
+    .logo-text span { color:var(--green-fresh); }
+    .nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+    .nav-links a { text-decoration:none; font-size:14px; font-weight:500; color:var(--text-mid); transition:color 0.2s; }
+    .nav-links a:hover,.nav-links a.active { color:var(--green-mid); }
+    .nav-cta { display:flex; gap:12px; }
+    .btn-outline { padding:9px 22px; border:1.5px solid var(--green-mid); border-radius:8px; background:transparent; color:var(--green-mid); font-size:14px; font-weight:500; cursor:pointer; text-decoration:none; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+    .btn-outline:hover { background:var(--green-mid); color:var(--white); }
+    .btn-solid { padding:9px 22px; border:none; border-radius:8px; background:var(--green-mid); color:var(--white); font-size:14px; font-weight:500; cursor:pointer; text-decoration:none; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+    .btn-solid:hover { background:var(--green-deep); }
 
-    /* PAGE HEADER */
-    .page-header {
-      background: var(--green-deep);
-      padding: 120px 60px 60px;
-      position: relative; overflow: hidden;
-    }
-    .page-header::before {
-      content: '';
-      position: absolute; top: -100px; right: -80px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(82,183,136,0.12) 0%, transparent 70%);
-    }
-    .page-header-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--green-light); margin-bottom: 10px; }
-    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--white); letter-spacing: -1px; margin-bottom: 12px; }
-    .page-header p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 500px; line-height: 1.7; }
-    .header-stats { display: flex; gap: 40px; margin-top: 32px; }
-    .h-stat { display: flex; align-items: center; gap: 10px; }
-    .h-stat-icon { font-size: 20px; }
-    .h-stat-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--white); }
-    .h-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .page-header { margin-top:74px; background:var(--green-deep); padding:60px 60px 48px; position:relative; overflow:hidden; }
+    .page-header::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(82,183,136,0.12) 0%,transparent 70%); }
+    .breadcrumb { display:flex; align-items:center; gap:8px; font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+    .breadcrumb a { color:rgba(255,255,255,0.5); text-decoration:none; }
+    .page-title { font-family:'Playfair Display',serif; font-size:44px; font-weight:700; color:var(--white); letter-spacing:-1px; margin-bottom:10px; position:relative; z-index:1; }
+    .page-sub { font-size:16px; color:rgba(255,255,255,0.6); max-width:500px; position:relative; z-index:1; }
+    .page-header-stats { display:flex; gap:40px; margin-top:32px; position:relative; z-index:1; }
+    .ph-stat-num { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--white); }
+    .ph-stat-label { font-size:12px; color:rgba(255,255,255,0.5); }
 
-    /* MAIN LAYOUT */
-    .main-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 0;
-      min-height: calc(100vh - 300px);
-    }
+    .main-layout { display:grid; grid-template-columns:280px 1fr; min-height:calc(100vh - 74px); }
 
-    /* SIDEBAR FILTERS */
-    .sidebar {
-      background: var(--white);
-      border-right: 1px solid var(--cream-dark);
-      padding: 32px 24px;
-      position: sticky; top: 74px;
-      height: calc(100vh - 74px);
-      overflow-y: auto;
-    }
-    .sidebar-title { font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
-    .clear-btn { font-size: 12px; color: var(--green-mid); cursor: pointer; font-weight: 500; background: none; border: none; font-family: 'DM Sans', sans-serif; }
-    .filter-group { margin-bottom: 28px; }
-    .filter-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 12px; }
-    .filter-options { display: flex; flex-direction: column; gap: 8px; }
-    .filter-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-    .filter-option input[type="checkbox"] { accent-color: var(--green-mid); width: 15px; height: 15px; cursor: pointer; }
-    .filter-option label { font-size: 14px; color: var(--text-mid); cursor: pointer; flex: 1; }
-    .filter-option .count { font-size: 12px; color: var(--text-light); background: var(--cream); padding: 2px 7px; border-radius: 100px; }
-    .filter-divider { border: none; border-top: 1px solid var(--cream-dark); margin: 8px 0; }
-    .price-range { display: flex; flex-direction: column; gap: 10px; }
-    .price-inputs { display: flex; gap: 8px; align-items: center; }
-    .price-input { flex: 1; padding: 8px 10px; border: 1.5px solid var(--cream-dark); border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; color: var(--text-dark); }
-    .price-input:focus { border-color: var(--green-light); }
-    .price-sep { font-size: 13px; color: var(--text-light); }
-    .apply-filter-btn { width: 100%; padding: 11px; background: var(--green-mid); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 16px; transition: background 0.2s; }
-    .apply-filter-btn:hover { background: var(--green-deep); }
+    .sidebar { background:var(--white); border-right:1px solid var(--cream-dark); padding:32px 24px; position:sticky; top:74px; height:calc(100vh - 74px); overflow-y:auto; }
+    .filter-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; }
+    .filter-title { font-size:15px; font-weight:600; }
+    .filter-reset { font-size:13px; color:var(--green-mid); cursor:pointer; background:none; border:none; font-family:'DM Sans',sans-serif; }
+    .filter-group { margin-bottom:28px; }
+    .filter-group-title { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-light); margin-bottom:12px; }
+    .filter-options { display:flex; flex-direction:column; gap:8px; }
+    .filter-option { display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .filter-option input[type="checkbox"] { display:none; }
+    .custom-cb { width:18px; height:18px; border:1.5px solid var(--cream-dark); border-radius:5px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+    .filter-option input:checked + .custom-cb { background:var(--green-mid); border-color:var(--green-mid); }
+    .filter-option input:checked + .custom-cb::after { content:'✓'; font-size:11px; color:white; font-weight:700; }
+    .filter-option-label { font-size:14px; color:var(--text-mid); }
+    .filter-count { margin-left:auto; font-size:12px; color:var(--text-light); background:var(--cream); padding:2px 8px; border-radius:100px; }
+    .price-inputs { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .price-input { flex:1; padding:8px 12px; border:1.5px solid var(--cream-dark); border-radius:8px; font-size:13px; font-family:'DM Sans',sans-serif; outline:none; }
+    .price-input:focus { border-color:var(--green-light); }
 
-    /* CONTENT AREA */
-    .content-area { padding: 32px 40px; }
-    .content-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: gap; gap: 16px; }
-    .search-bar { display: flex; align-items: center; gap: 0; flex: 1; max-width: 400px; }
-    .search-input { flex: 1; padding: 11px 16px; border: 1.5px solid var(--cream-dark); border-right: none; border-radius: 10px 0 0 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; background: var(--white); }
-    .search-input:focus { border-color: var(--green-light); }
-    .search-btn { padding: 11px 18px; background: var(--green-mid); border: none; border-radius: 0 10px 10px 0; color: var(--white); font-size: 16px; cursor: pointer; }
-    .sort-wrap { display: flex; align-items: center; gap: 10px; }
-    .sort-label { font-size: 13px; color: var(--text-light); }
-    .sort-select { padding: 9px 14px; border: 1.5px solid var(--cream-dark); border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-dark); outline: none; background: var(--white); cursor: pointer; }
-    .results-info { font-size: 14px; color: var(--text-light); margin-bottom: 20px; }
-    .results-info span { font-weight: 600; color: var(--text-dark); }
+    .content-area { padding:28px 40px; }
+    .search-bar { display:flex; gap:12px; align-items:center; margin-bottom:24px; }
+    .search-wrap { flex:1; position:relative; }
+    .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; }
+    .search-input { width:100%; padding:12px 16px 12px 42px; border:1.5px solid var(--cream-dark); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; background:var(--white); outline:none; transition:border-color 0.2s; }
+    .search-input:focus { border-color:var(--green-light); }
+    .sort-select { padding:12px 16px; border:1.5px solid var(--cream-dark); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; background:var(--white); outline:none; cursor:pointer; }
 
-    /* ACTIVE FILTERS */
-    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .filter-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(82,183,136,0.12); border: 1px solid rgba(82,183,136,0.25); color: var(--green-mid); font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 100px; }
-    .filter-tag button { background: none; border: none; color: var(--green-mid); cursor: pointer; font-size: 13px; line-height: 1; padding: 0; }
+    .results-info { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .results-count { font-size:14px; color:var(--text-light); }
+    .results-count strong { color:var(--text-dark); font-weight:600; }
+    .active-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .filter-tag { display:flex; align-items:center; gap:6px; background:rgba(82,183,136,0.12); border:1px solid rgba(82,183,136,0.25); border-radius:100px; padding:5px 12px; font-size:13px; color:var(--green-mid); }
 
-    /* CONTRACT CARDS GRID */
-    .contracts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .contracts-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+    .contract-card { background:var(--white); border-radius:18px; padding:24px; border:1px solid rgba(82,183,136,0.08); transition:all 0.25s; cursor:pointer; position:relative; overflow:hidden; }
+    .contract-card:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(26,58,42,0.1); border-color:var(--green-light); }
+    .contract-card.featured::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--green-fresh),var(--green-light)); }
 
-    .contract-card {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 24px;
-      border: 1px solid rgba(82,183,136,0.1);
-      transition: all 0.25s;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-    .contract-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(26,58,42,0.1); border-color: var(--green-light); }
-    .contract-card.featured { border-color: var(--gold); }
-    .featured-badge { position: absolute; top: 0; right: 0; background: var(--gold); color: var(--white); font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 0 16px 0 10px; letter-spacing: 0.5px; }
+    .cc-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+    .cc-crop-wrap { display:flex; align-items:center; gap:10px; }
+    .cc-emoji { font-size:28px; }
+    .cc-crop-name { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--green-deep); }
+    .cc-crop-type { font-size:12px; color:var(--text-light); }
+    .cc-badges { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 10px; border-radius:100px; letter-spacing:0.4px; }
+    .badge-open { background:rgba(82,183,136,0.12); color:var(--green-mid); }
+    .badge-urgent { background:rgba(224,92,92,0.1); color:var(--red); }
+    .badge-featured { background:rgba(201,168,76,0.15); color:var(--gold); }
+    .badge-closing { background:rgba(201,168,76,0.15); color:#b8860b; }
 
-    .cc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .cc-crop-wrap { display: flex; align-items: center; gap: 10px; }
-    .cc-emoji { font-size: 28px; }
-    .cc-crop { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--green-deep); }
-    .cc-variety { font-size: 12px; color: var(--text-light); }
-    .cc-status { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; letter-spacing: 0.5px; }
-    .cc-status.open { background: rgba(82,183,136,0.12); color: var(--green-mid); }
-    .cc-status.closing { background: rgba(201,168,76,0.15); color: var(--gold); }
-    .cc-status.urgent { background: rgba(224,92,92,0.12); color: var(--red); }
+    .cc-company { font-size:14px; font-weight:500; color:var(--text-mid); margin-bottom:16px; display:flex; align-items:center; gap:6px; }
+    .cc-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
+    .cc-label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-light); margin-bottom:3px; }
+    .cc-val { font-size:14px; font-weight:500; color:var(--text-dark); }
+    .cc-val.price { color:var(--green-mid); font-weight:600; }
+    .cc-applicants { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-light); margin-bottom:14px; }
 
-    .cc-company { font-size: 14px; font-weight: 500; color: var(--text-mid); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
-    .verified { font-size: 14px; color: var(--green-fresh); }
+    .cc-footer { display:flex; gap:10px; align-items:center; }
+    .btn-apply { flex:1; padding:11px; background:var(--green-mid); color:var(--white); border:none; border-radius:9px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
+    .btn-apply:hover { background:var(--green-deep); }
+    .btn-save { width:42px; height:42px; border:1.5px solid var(--cream-dark); border-radius:9px; background:var(--white); display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; transition:all 0.2s; }
+    .btn-save:hover { border-color:var(--green-light); }
 
-    .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .cc-item { background: var(--cream); border-radius: 8px; padding: 10px 12px; }
-    .cc-item-label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
-    .cc-item-val { font-size: 14px; font-weight: 500; color: var(--text-dark); }
-    .cc-item-val.price { color: var(--green-mid); font-weight: 600; }
-
-    .cc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-    .cc-tag { font-size: 11px; color: var(--text-mid); background: var(--cream-dark); padding: 3px 9px; border-radius: 100px; }
-
-    .cc-footer { display: flex; align-items: center; justify-content: space-between; }
-    .cc-deadline { font-size: 12px; color: var(--text-light); display: flex; align-items: center; gap: 4px; }
-    .cc-actions { display: flex; gap: 8px; }
-    .btn-save { padding: 8px 14px; border: 1.5px solid var(--cream-dark); border-radius: 8px; background: transparent; font-size: 13px; color: var(--text-light); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-    .btn-save:hover { border-color: var(--green-light); color: var(--green-mid); }
-    .btn-apply { padding: 8px 18px; border: none; border-radius: 8px; background: var(--green-mid); color: var(--white); font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
-    .btn-apply:hover { background: var(--green-deep); }
-
-    /* PAGINATION */
-    .pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 40px; padding-bottom: 60px; }
-    .page-btn { width: 38px; height: 38px; border-radius: 8px; border: 1.5px solid var(--cream-dark); background: var(--white); font-size: 14px; font-weight: 500; color: var(--text-mid); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-    .page-btn:hover { border-color: var(--green-light); color: var(--green-mid); }
-    .page-btn.active { background: var(--green-mid); border-color: var(--green-mid); color: var(--white); }
-    .page-btn.arrow { font-size: 16px; }
+    .load-more-wrap { text-align:center; margin-top:40px; padding-bottom:60px; }
+    .btn-load-more { padding:14px 40px; border:1.5px solid var(--green-mid); border-radius:10px; background:transparent; color:var(--green-mid); font-size:15px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+    .btn-load-more:hover { background:var(--green-mid); color:var(--white); }
 
     /* MODAL */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(26,58,42,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
-    .modal-overlay.open { display: flex; }
-    .modal { background: var(--white); border-radius: 24px; width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto; animation: modalIn 0.3s ease; }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 28px 28px 20px; border-bottom: 1px solid var(--cream-dark); }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green-deep); }
-    .modal-close { background: none; border: none; font-size: 22px; color: var(--text-light); cursor: pointer; }
-    .modal-body { padding: 24px 28px; }
-    .modal-company { font-size: 15px; color: var(--text-mid); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
-    .modal-section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 12px; margin-top: 20px; }
-    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .modal-item { background: var(--cream); border-radius: 10px; padding: 14px 16px; }
-    .modal-item-label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .modal-item-val { font-size: 15px; font-weight: 500; color: var(--text-dark); }
-    .modal-desc { font-size: 14px; color: var(--text-mid); line-height: 1.7; background: var(--cream); border-radius: 10px; padding: 16px; margin-top: 12px; }
-    .modal-footer { padding: 20px 28px 28px; display: flex; gap: 12px; }
-    .modal-btn-apply { flex: 1; padding: 14px; background: var(--green-mid); color: var(--white); border: none; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
-    .modal-btn-apply:hover { background: var(--green-deep); }
-    .modal-btn-msg { padding: 14px 20px; border: 1.5px solid var(--cream-dark); border-radius: 10px; background: transparent; color: var(--text-mid); font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-    .modal-btn-msg:hover { border-color: var(--green-light); color: var(--green-mid); }
+    .modal-overlay { position:fixed; inset:0; z-index:200; background:rgba(26,58,42,0.5); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; }
+    .modal-overlay.open { display:flex; animation:fadeIn 0.2s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal { background:var(--white); border-radius:24px; padding:40px; width:520px; max-width:95vw; max-height:90vh; overflow-y:auto; position:relative; animation:slideUp 0.3s ease; }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal-close { position:absolute; top:20px; right:20px; background:var(--cream); border:none; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .modal-crop-title { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--green-deep); margin-bottom:6px; }
+    .modal-company { font-size:15px; color:var(--text-mid); margin-bottom:20px; display:flex; align-items:center; gap:6px; }
+    .modal-section-title { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-light); margin-bottom:10px; margin-top:22px; }
+    .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .modal-item { background:var(--cream); border-radius:10px; padding:12px; }
+    .modal-item-label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-light); margin-bottom:4px; }
+    .modal-item-val { font-size:14px; font-weight:500; color:var(--text-dark); }
+    .modal-desc { font-size:14px; color:var(--text-mid); line-height:1.7; }
+    .modal-quality { display:flex; flex-wrap:wrap; gap:8px; }
+    .quality-tag { background:rgba(82,183,136,0.1); border:1px solid rgba(82,183,136,0.2); border-radius:100px; padding:5px 14px; font-size:13px; color:var(--green-mid); }
+    .modal-apply-btn { width:100%; margin-top:24px; padding:15px; background:var(--green-mid); color:var(--white); border:none; border-radius:12px; font-size:16px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background 0.2s; }
+    .modal-apply-btn:hover { background:var(--green-deep); }
 
     /* CHATBOT */
-    .chatbot-fab { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 56px; height: 56px; background: var(--green-mid); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 30px rgba(45,106,79,0.4); transition: all 0.3s; border: none; font-size: 24px; }
-    .chatbot-fab:hover { transform: scale(1.08); background: var(--green-deep); }
-    .chatbot-panel { position: fixed; bottom: 96px; right: 28px; z-index: 998; width: 340px; background: var(--white); border-radius: 20px; box-shadow: 0 20px 60px rgba(26,58,42,0.18); border: 1px solid rgba(82,183,136,0.15); overflow: hidden; display: none; flex-direction: column; max-height: 460px; }
-    .chatbot-panel.open { display: flex; animation: slideUp 0.3s ease; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    .chat-header { background: var(--green-mid); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-    .chat-header-info { display: flex; align-items: center; gap: 10px; }
-    .chat-avatar { width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-    .chat-name { font-size: 15px; font-weight: 600; color: var(--white); }
-    .chat-status { font-size: 12px; color: rgba(255,255,255,0.7); }
-    .chat-close { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-    .msg { max-width: 85%; }
-    .msg.bot { align-self: flex-start; }
-    .msg.user { align-self: flex-end; }
-    .msg-bubble { padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
-    .msg.bot .msg-bubble { background: var(--cream); color: var(--text-dark); border-bottom-left-radius: 4px; }
-    .msg.user .msg-bubble { background: var(--green-mid); color: var(--white); border-bottom-right-radius: 4px; }
-    .chat-input-wrap { padding: 12px 16px; border-top: 1px solid var(--cream-dark); display: flex; gap: 8px; }
-    .chat-input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--cream-dark); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; }
-    .chat-input:focus { border-color: var(--green-light); }
-    .chat-send { width: 40px; height: 40px; background: var(--green-mid); border: none; border-radius: 10px; color: var(--white); font-size: 16px; cursor: pointer; }
-    .typing { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
-    .typing span { width: 7px; height: 7px; background: var(--text-light); border-radius: 50%; animation: bounce 1.2s infinite; }
-    .typing span:nth-child(2) { animation-delay: 0.2s; }
-    .typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+    .chatbot-fab { position:fixed; bottom:28px; right:28px; z-index:999; width:56px; height:56px; background:var(--green-mid); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 8px 30px rgba(45,106,79,0.4); transition:all 0.3s; border:none; font-size:24px; }
+    .chatbot-fab:hover { transform:scale(1.08); background:var(--green-deep); }
+    .chatbot-panel { position:fixed; bottom:96px; right:28px; z-index:998; width:360px; background:var(--white); border-radius:20px; box-shadow:0 20px 60px rgba(26,58,42,0.18); border:1px solid rgba(82,183,136,0.15); overflow:hidden; display:none; flex-direction:column; max-height:500px; }
+    .chatbot-panel.open { display:flex; }
+    .chat-header { background:var(--green-mid); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; }
+    .chat-header-info { display:flex; align-items:center; gap:10px; }
+    .chat-avatar { width:36px; height:36px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .chat-name { font-size:15px; font-weight:600; color:var(--white); }
+    .chat-status { font-size:12px; color:rgba(255,255,255,0.7); }
+    .chat-close-btn { background:none; border:none; color:rgba(255,255,255,0.7); font-size:20px; cursor:pointer; }
+    .chat-messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px; }
+    .msg { max-width:85%; }
+    .msg.bot { align-self:flex-start; }
+    .msg.user { align-self:flex-end; }
+    .msg-bubble { padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.5; }
+    .msg.bot .msg-bubble { background:var(--cream); color:var(--text-dark); border-bottom-left-radius:4px; }
+    .msg.user .msg-bubble { background:var(--green-mid); color:var(--white); border-bottom-right-radius:4px; }
+    .chat-input-wrap { padding:12px 16px; border-top:1px solid var(--cream-dark); display:flex; gap:8px; }
+    .chat-input { flex:1; padding:10px 14px; border:1.5px solid var(--cream-dark); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; }
+    .chat-input:focus { border-color:var(--green-light); }
+    .chat-send { width:40px; height:40px; background:var(--green-mid); border:none; border-radius:10px; color:var(--white); font-size:16px; cursor:pointer; }
+    .typing { display:flex; gap:4px; align-items:center; }
+    .typing span { width:7px; height:7px; background:var(--text-light); border-radius:50%; animation:bounce 1.2s infinite; }
+    .typing span:nth-child(2) { animation-delay:0.2s; }
+    .typing span:nth-child(3) { animation-delay:0.4s; }
+    @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="logo-icon">🌾</div>
@@ -250,400 +176,242 @@
   </div>
 </nav>
 
-<!-- PAGE HEADER -->
 <div class="page-header">
-  <div class="page-header-label">Contract Marketplace</div>
-  <h1>Find Crop Contracts</h1>
-  <p>Browse verified contracts from India's top food industries, processors and exporters. Apply directly — no middlemen.</p>
-  <div class="header-stats">
-    <div class="h-stat">
-      <span class="h-stat-icon">📋</span>
-      <div>
-        <div class="h-stat-num">382</div>
-        <div class="h-stat-label">Active Contracts</div>
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Marketplace</span></div>
+  <div class="page-title">Contract Marketplace</div>
+  <div class="page-sub">Browse open crop contracts from verified industries across India. Apply directly — no middlemen.</div>
+  <div class="page-header-stats">
+    <div class="ph-stat"><div class="ph-stat-num">384</div><div class="ph-stat-label">Open Contracts</div></div>
+    <div class="ph-stat"><div class="ph-stat-num">142</div><div class="ph-stat-label">Verified Buyers</div></div>
+    <div class="ph-stat"><div class="ph-stat-num">28</div><div class="ph-stat-label">Crop Types</div></div>
+  </div>
+</div>
+
+<div class="main-layout">
+  <aside class="sidebar">
+    <div class="filter-header">
+      <span class="filter-title">🔍 Filters</span>
+      <button class="filter-reset" onclick="document.querySelectorAll('.filter-option input').forEach(c=>c.checked=false)">Reset All</button>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-title">Crop Type</div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox" checked/><div class="custom-cb"></div><span class="filter-option-label">All Crops</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🌾 Cereals & Grains</span><span class="filter-count">84</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🥦 Vegetables</span><span class="filter-count">67</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🍎 Fruits</span><span class="filter-count">52</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🫘 Pulses & Legumes</span><span class="filter-count">43</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🌿 Spices & Herbs</span><span class="filter-count">38</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🍵 Tea & Coffee</span><span class="filter-count">29</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">🌻 Oilseeds</span><span class="filter-count">24</span></label>
       </div>
     </div>
-    <div class="h-stat">
-      <span class="h-stat-icon">🏭</span>
-      <div>
-        <div class="h-stat-num">94</div>
-        <div class="h-stat-label">Verified Buyers</div>
+    <div class="filter-group">
+      <div class="filter-group-title">Region</div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">Northeast India</span><span class="filter-count">41</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">North India</span><span class="filter-count">96</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">South India</span><span class="filter-count">78</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">West India</span><span class="filter-count">64</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">East India</span><span class="filter-count">53</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">Central India</span><span class="filter-count">52</span></label>
       </div>
     </div>
-    <div class="h-stat">
-      <span class="h-stat-icon">🌾</span>
-      <div>
-        <div class="h-stat-num">48</div>
-        <div class="h-stat-label">Crop Types</div>
+    <div class="filter-group">
+      <div class="filter-group-title">Quantity (Metric Tons)</div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">Under 50 MT</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">50 – 200 MT</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">200 – 500 MT</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">500 MT and above</span></label>
       </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-title">Price Range (₹/kg)</div>
+      <div class="price-inputs">
+        <input type="number" class="price-input" placeholder="Min"/>
+        <span style="color:var(--text-light)">–</span>
+        <input type="number" class="price-input" placeholder="Max"/>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-title">Delivery Timeline</div>
+      <div class="filter-options">
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">Within 1 Month</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">1 – 3 Months</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">3 – 6 Months</span></label>
+        <label class="filter-option"><input type="checkbox"/><div class="custom-cb"></div><span class="filter-option-label">6+ Months</span></label>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-area">
+    <div class="search-bar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Search by crop, company, or region..."/>
+      </div>
+      <select class="sort-select">
+        <option>Sort: Newest First</option>
+        <option>Sort: Price High to Low</option>
+        <option>Sort: Price Low to High</option>
+        <option>Sort: Quantity High to Low</option>
+        <option>Sort: Deadline Soon</option>
+      </select>
+    </div>
+
+    <div class="active-filters">
+      <div class="filter-tag">All Crops ✕</div>
+      <div class="filter-tag">All Regions ✕</div>
+      <div class="filter-tag">Open Contracts ✕</div>
+    </div>
+
+    <div class="results-info">
+      <div class="results-count">Showing <strong>8</strong> of <strong>384</strong> contracts</div>
+    </div>
+
+    <div class="contracts-grid">
+
+      <div class="contract-card featured" onclick="openModal('wheat')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🌾</span><div><div class="cc-crop-name">Wheat</div><div class="cc-crop-type">Premium Grade A</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span><span class="badge badge-featured">⭐ Featured</span></div>
+        </div>
+        <div class="cc-company">✔ Britannia Industries Ltd.</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">500 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹22/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Punjab, Haryana</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">June 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 24 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('tea')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🌿</span><div><div class="cc-crop-name">Green Tea</div><div class="cc-crop-type">First Flush, Organic</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span><span class="badge badge-urgent">🔴 Urgent</span></div>
+        </div>
+        <div class="cc-company">✔ Tata Consumer Products</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">80 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹320/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Assam, Darjeeling</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">May 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 11 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('rice')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🌾</span><div><div class="cc-crop-name">Basmati Rice</div><div class="cc-crop-type">Export Quality</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span></div>
+        </div>
+        <div class="cc-company">✔ KRBL Ltd. (India Gate)</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">1,000 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹42/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">UP, Uttarakhand</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Nov 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 38 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('tomato')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🍅</span><div><div class="cc-crop-name">Tomato</div><div class="cc-crop-type">Processing Grade</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span><span class="badge badge-closing">⏳ Closing Soon</span></div>
+        </div>
+        <div class="cc-company">✔ ITC Agribusiness Division</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">200 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹18/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Maharashtra</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Apr 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 7 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card featured" onclick="openModal('potato')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🥔</span><div><div class="cc-crop-name">Potato</div><div class="cc-crop-type">Chipping Variety FC-5</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span><span class="badge badge-featured">⭐ Featured</span></div>
+        </div>
+        <div class="cc-company">✔ PepsiCo India Holdings</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">3,000 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹14/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Gujarat, Punjab</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Mar 2027</div></div>
+        </div>
+        <div class="cc-applicants">👥 56 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('ginger')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🫚</span><div><div class="cc-crop-name">Ginger</div><div class="cc-crop-type">Dried, Export Grade</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span></div>
+        </div>
+        <div class="cc-company">✔ Everest Food Products</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">40 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹85/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Kerala, Karnataka</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Jul 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 15 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('maize')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🌽</span><div><div class="cc-crop-name">Maize / Corn</div><div class="cc-crop-type">Feed Grade Yellow</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span></div>
+        </div>
+        <div class="cc-company">✔ Suguna Foods Pvt. Ltd.</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">800 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹19/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">AP, Telangana</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Sep 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 31 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+      <div class="contract-card" onclick="openModal('mustard')">
+        <div class="cc-top">
+          <div class="cc-crop-wrap"><span class="cc-emoji">🌻</span><div><div class="cc-crop-name">Mustard Seeds</div><div class="cc-crop-type">Oil Extraction Grade</div></div></div>
+          <div class="cc-badges"><span class="badge badge-open">● Open</span><span class="badge badge-urgent">🔴 Urgent</span></div>
+        </div>
+        <div class="cc-company">✔ Adani Wilmar (Fortune)</div>
+        <div class="cc-grid">
+          <div><div class="cc-label">Quantity</div><div class="cc-val">600 MT</div></div>
+          <div><div class="cc-label">Price</div><div class="cc-val price">₹55/kg</div></div>
+          <div><div class="cc-label">Region</div><div class="cc-val">Rajasthan, MP</div></div>
+          <div><div class="cc-label">Deadline</div><div class="cc-val">Apr 2026</div></div>
+        </div>
+        <div class="cc-applicants">👥 9 farmers applied</div>
+        <div class="cc-footer"><button class="btn-apply">Apply Now →</button><button class="btn-save">🔖</button></div>
+      </div>
+
+    </div>
+    <div class="load-more-wrap">
+      <button class="btn-load-more">Load More Contracts (376 remaining)</button>
     </div>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
-<div class="main-layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-title">
-      Filters
-      <button class="clear-btn" onclick="clearFilters()">Clear all</button>
-    </div>
-
-    <div class="filter-group">
-      <div class="filter-label">Crop Type</div>
-      <div class="filter-options">
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Wheat</label> <span class="count">42</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Rice / Paddy</label> <span class="count">38</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Tea</label> <span class="count">27</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Tomato</label> <span class="count">31</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Potato</label> <span class="count">24</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Onion</label> <span class="count">19</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Maize / Corn</label> <span class="count">22</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Soybean</label> <span class="count">16</span></label>
-      </div>
-    </div>
-
-    <hr class="filter-divider"/>
-
-    <div class="filter-group">
-      <div class="filter-label">Region</div>
-      <div class="filter-options">
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Assam</label> <span class="count">18</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Punjab</label> <span class="count">45</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Maharashtra</label> <span class="count">52</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Uttar Pradesh</label> <span class="count">38</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>West Bengal</label> <span class="count">29</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Karnataka</label> <span class="count">33</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Gujarat</label> <span class="count">27</span></label>
-      </div>
-    </div>
-
-    <hr class="filter-divider"/>
-
-    <div class="filter-group">
-      <div class="filter-label">Contract Status</div>
-      <div class="filter-options">
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Open</label> <span class="count">284</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Closing Soon</label> <span class="count">58</span></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Urgent</label> <span class="count">40</span></label>
-      </div>
-    </div>
-
-    <hr class="filter-divider"/>
-
-    <div class="filter-group">
-      <div class="filter-label">Quantity (MT)</div>
-      <div class="price-range">
-        <div class="price-inputs">
-          <input type="number" class="price-input" placeholder="Min" id="qtyMin"/>
-          <span class="price-sep">—</span>
-          <input type="number" class="price-input" placeholder="Max" id="qtyMax"/>
-        </div>
-      </div>
-    </div>
-
-    <hr class="filter-divider"/>
-
-    <div class="filter-group">
-      <div class="filter-label">Delivery Timeline</div>
-      <div class="filter-options">
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>Within 1 month</label></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>1–3 months</label></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>3–6 months</label></label>
-        <label class="filter-option"><input type="checkbox" onchange="filterContracts()"> <label>6+ months</label></label>
-      </div>
-    </div>
-
-    <button class="apply-filter-btn">Apply Filters</button>
-  </aside>
-
-  <!-- CONTENT -->
-  <div class="content-area">
-    <div class="content-top">
-      <div class="search-bar">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search crop, company, region..." oninput="filterContracts()"/>
-        <button class="search-btn">🔍</button>
-      </div>
-      <div class="sort-wrap">
-        <span class="sort-label">Sort by:</span>
-        <select class="sort-select" onchange="filterContracts()">
-          <option>Newest First</option>
-          <option>Price: High to Low</option>
-          <option>Price: Low to High</option>
-          <option>Quantity: High to Low</option>
-          <option>Deadline: Soonest</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="active-filters" id="activeFilters"></div>
-    <div class="results-info" id="resultsInfo">Showing <span>8</span> of <span>382</span> contracts</div>
-
-    <div class="contracts-grid" id="contractsGrid">
-
-      <!-- Card 1 -->
-      <div class="contract-card featured" onclick="openModal('wheat')">
-        <div class="featured-badge">⭐ Featured</div>
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🌾</span>
-            <div>
-              <div class="cc-crop">Premium Wheat</div>
-              <div class="cc-variety">HD-2967 Variety</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">Britannia Industries Ltd. <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">500 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹2,200/qtl</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">Punjab, Haryana</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">June 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Protein ≥ 11%</span><span class="cc-tag">Moisture ≤ 12%</span><span class="cc-tag">Certified</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 18 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('wheat')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="contract-card" onclick="openModal('tea')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🌿</span>
-            <div>
-              <div class="cc-crop">Green Tea Leaves</div>
-              <div class="cc-variety">First Flush</div>
-            </div>
-          </div>
-          <span class="cc-status closing">Closing Soon</span>
-        </div>
-        <div class="cc-company">Tata Consumer Products <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">80 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹320/kg</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">Assam, Darjeeling</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">May 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Organic preferred</span><span class="cc-tag">No pesticides</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 6 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('tea')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="contract-card" onclick="openModal('rice')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🌾</span>
-            <div>
-              <div class="cc-crop">Basmati Rice</div>
-              <div class="cc-variety">1121 Sella</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">KRBL Ltd. (India Gate) <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">1,000 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹4,200/qtl</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">UP, Uttarakhand</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Nov 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">GI Tagged</span><span class="cc-tag">Aroma Grade A</span><span class="cc-tag">Export quality</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 45 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('rice')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="contract-card" onclick="openModal('tomato')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🍅</span>
-            <div>
-              <div class="cc-crop">Processing Tomato</div>
-              <div class="cc-variety">Roma variety</div>
-            </div>
-          </div>
-          <span class="cc-status urgent">Urgent</span>
-        </div>
-        <div class="cc-company">ITC Agribusiness Division <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">200 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹18/kg</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">Maharashtra</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Aug 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Brix ≥ 5</span><span class="cc-tag">No blemishes</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 3 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('tomato')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="contract-card" onclick="openModal('potato')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🥔</span>
-            <div>
-              <div class="cc-crop">Chipping Potato</div>
-              <div class="cc-variety">Chipsona-1</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">PepsiCo India Holdings <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">750 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹1,400/qtl</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">West Bengal, UP</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Feb 2027</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Dry matter ≥ 20%</span><span class="cc-tag">Uniform size</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 60 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('potato')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="contract-card" onclick="openModal('maize')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🌽</span>
-            <div>
-              <div class="cc-crop">Yellow Maize</div>
-              <div class="cc-variety">Hybrid DKC-9081</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">Cargill India Pvt. Ltd. <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">2,000 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹1,950/qtl</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">Karnataka, AP</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Oct 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Moisture ≤ 14%</span><span class="cc-tag">Aflatoxin free</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 30 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('maize')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 7 -->
-      <div class="contract-card" onclick="openModal('onion')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🧅</span>
-            <div>
-              <div class="cc-crop">Export Onion</div>
-              <div class="cc-variety">Nasik Red</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">Sahyadri Farms Export <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">400 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹22/kg</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">Maharashtra</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Jul 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Export Grade</span><span class="cc-tag">Size 50–70mm</span><span class="cc-tag">GlobalGAP</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 25 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('onion')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 8 -->
-      <div class="contract-card" onclick="openModal('soybean')">
-        <div class="cc-header">
-          <div class="cc-crop-wrap">
-            <span class="cc-emoji">🫘</span>
-            <div>
-              <div class="cc-crop">Soybean</div>
-              <div class="cc-variety">JS-335</div>
-            </div>
-          </div>
-          <span class="cc-status open">Open</span>
-        </div>
-        <div class="cc-company">Ruchi Soya Industries <span class="verified">✓</span></div>
-        <div class="cc-grid">
-          <div class="cc-item"><div class="cc-item-label">Quantity</div><div class="cc-item-val">600 MT</div></div>
-          <div class="cc-item"><div class="cc-item-label">Price</div><div class="cc-item-val price">₹4,800/qtl</div></div>
-          <div class="cc-item"><div class="cc-item-label">Region</div><div class="cc-item-val">MP, Maharashtra</div></div>
-          <div class="cc-item"><div class="cc-item-label">Delivery</div><div class="cc-item-val">Dec 2026</div></div>
-        </div>
-        <div class="cc-tags"><span class="cc-tag">Protein ≥ 40%</span><span class="cc-tag">Non-GMO</span></div>
-        <div class="cc-footer">
-          <span class="cc-deadline">⏰ Closes in 50 days</span>
-          <div class="cc-actions">
-            <button class="btn-save" onclick="event.stopPropagation()">🔖 Save</button>
-            <button class="btn-apply" onclick="event.stopPropagation(); openModal('soybean')">Apply →</button>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end contracts-grid -->
-
-    <!-- PAGINATION -->
-    <div class="pagination">
-      <button class="page-btn arrow">‹</button>
-      <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <button class="page-btn">4</button>
-      <button class="page-btn">...</button>
-      <button class="page-btn">48</button>
-      <button class="page-btn arrow">›</button>
-    </div>
-
-  </div><!-- end content-area -->
-</div><!-- end main-layout -->
-
-<!-- CONTRACT DETAIL MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" id="modalBox">
-    <div class="modal-header">
-      <div class="modal-title" id="modalTitle">Premium Wheat</div>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer">
-      <button class="modal-btn-msg" onclick="window.location.href='login.html'">💬 Message Buyer</button>
-      <button class="modal-btn-apply" onclick="window.location.href='login.html'">✅ Apply for this Contract</button>
-    </div>
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalBody"></div>
   </div>
 </div>
 
@@ -655,102 +423,72 @@
       <div class="chat-avatar">🤖</div>
       <div><div class="chat-name">AgriLink Assistant</div><div class="chat-status">● Online</div></div>
     </div>
-    <button class="chat-close" id="chatClose">✕</button>
+    <button class="chat-close-btn" id="chatClose">✕</button>
   </div>
   <div class="chat-messages" id="chatMessages">
-    <div class="msg bot"><div class="msg-bubble">👋 Hi! I can help you find the right contracts for your crops. What do you grow?</div></div>
+    <div class="msg bot"><div class="msg-bubble">👋 Hi! Looking for the right contract? Tell me what you grow and your region — I'll help you find the best match!</div></div>
   </div>
   <div class="chat-input-wrap">
-    <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..."/>
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about contracts..."/>
     <button class="chat-send" id="chatSend">➤</button>
   </div>
 </div>
 
 <script>
 const contracts = {
-  wheat: { title: '🌾 Premium Wheat', company: 'Britannia Industries Ltd.', qty: '500 MT', price: '₹2,200/quintal', region: 'Punjab, Haryana', delivery: 'June 2026', quality: 'Protein ≥ 11%, Moisture ≤ 12%, No foreign matter', desc: 'Britannia requires premium wheat for biscuit and bread manufacturing. Farmers must supply from approved zones in Punjab/Haryana. Farm inspection may be conducted before contract signing.' },
-  tea: { title: '🌿 Green Tea Leaves', company: 'Tata Consumer Products', qty: '80 MT', price: '₹320/kg', region: 'Assam, Darjeeling', delivery: 'May 2026', quality: 'Organic preferred, No synthetic pesticides, First flush only', desc: 'Tata Consumer is sourcing premium first-flush green tea for their new health beverage line. Organic certification preferred. Gardens must be GAP certified or willing to undergo inspection.' },
-  rice: { title: '🌾 Basmati Rice', company: 'KRBL Ltd. (India Gate)', qty: '1,000 MT', price: '₹4,200/quintal', region: 'UP, Uttarakhand', delivery: 'November 2026', quality: 'GI Tagged, Aroma Grade A, Length ≥ 8mm', desc: 'KRBL requires GI-tagged Basmati rice from certified growing zones in UP and Uttarakhand. Export quality standards apply. Pre-harvest inspection and soil testing required.' },
-  tomato: { title: '🍅 Processing Tomato', company: 'ITC Agribusiness Division', qty: '200 MT', price: '₹18/kg', region: 'Maharashtra', delivery: 'August 2026', quality: 'Brix ≥ 5, No blemishes, Roma variety preferred', desc: 'ITC requires processing tomatoes for their tomato paste and ketchup lines. Urgent requirement. Farmers in Nashik/Pune belt preferred. Free seed supply provided under the contract.' },
-  potato: { title: '🥔 Chipping Potato', company: 'PepsiCo India Holdings', qty: '750 MT', price: '₹1,400/quintal', region: 'West Bengal, UP', delivery: 'February 2027', quality: 'Dry matter ≥ 20%, Uniform size 40–80mm, Chipsona-1 variety', desc: 'PepsiCo requires chipping-grade potatoes for Lay\'s snack manufacturing. Seed supply, technical support and assured buyback provided. Long-term partnership opportunity for serious farmers.' },
-  maize: { title: '🌽 Yellow Maize', company: 'Cargill India Pvt. Ltd.', qty: '2,000 MT', price: '₹1,950/quintal', region: 'Karnataka, Andhra Pradesh', delivery: 'October 2026', quality: 'Moisture ≤ 14%, Aflatoxin free, Hybrid variety only', desc: 'Cargill requires large quantities of yellow maize for poultry feed and starch processing. Largest contract on platform. Cluster farming encouraged. Advance payment option available.' },
-  onion: { title: '🧅 Export Onion', company: 'Sahyadri Farms Export', qty: '400 MT', price: '₹22/kg', region: 'Maharashtra', delivery: 'July 2026', quality: 'Size 50–70mm, GlobalGAP certified, Export Grade', desc: 'Sahyadri Farms is sourcing Nasik red onions for export to Middle East and Southeast Asia. Premium prices for export-grade produce. GlobalGAP training and support provided to selected farmers.' },
-  soybean: { title: '🫘 Soybean', company: 'Ruchi Soya Industries', qty: '600 MT', price: '₹4,800/quintal', region: 'Madhya Pradesh, Maharashtra', delivery: 'December 2026', quality: 'Protein ≥ 40%, Non-GMO, Moisture ≤ 10%', desc: 'Ruchi Soya requires high-protein non-GMO soybeans for oil extraction and soy meal production. Fair price commitment above MSP. Advance payment of 30% on contract signing.' }
+  wheat:{emoji:'🌾',name:'Premium Wheat',grade:'Grade A — Milling Quality',company:'Britannia Industries Ltd.',qty:'500 Metric Tons',price:'₹22/kg',region:'Punjab, Haryana',deadline:'June 30, 2026',delivery:'Farm Gate / Nearest FCI Warehouse',desc:'Britannia requires high-quality milling wheat for biscuit and bread manufacturing. Protein content must be above 11% and moisture below 12%. Contract includes 20% advance payment on agreement.',quality:['Protein > 11%','Moisture < 12%','No Pesticide Residue','Clean & Sorted','Grade A Certified'],applicants:24},
+  tea:{emoji:'🌿',name:'Green Tea Leaves',grade:'First Flush, Organic Certified',company:'Tata Consumer Products',qty:'80 Metric Tons',price:'₹320/kg',region:'Assam, Darjeeling',deadline:'May 15, 2026',delivery:'Processing Unit, Guwahati',desc:'Tata Consumer seeks premium first-flush green tea from certified organic gardens. Two-leaves-and-bud standard, hand-plucked only. Gardens must hold India Organic certification.',quality:['Organic Certified','Hand Plucked','Two Leaves & Bud','No Chemical Pesticides','Fresh Harvest Only'],applicants:11},
+  rice:{emoji:'🌾',name:'Basmati Rice',grade:'Export Quality — Long Grain',company:'KRBL Ltd. (India Gate)',qty:'1,000 Metric Tons',price:'₹42/kg',region:'Uttar Pradesh, Uttarakhand',deadline:'November 2026',delivery:'KRBL Processing Plant, Delhi NCR',desc:'KRBL requires premium long-grain basmati for export markets. Grain length minimum 7.5mm after cooking. Farmers receive technical support from KRBL agronomists throughout the season.',quality:['Grain Length ≥ 7.5mm','Moisture < 13%','Non-GMO','Export Grade','Aromatic Variety'],applicants:38},
+  tomato:{emoji:'🍅',name:'Processing Tomato',grade:'Industrial Processing Grade',company:'ITC Agribusiness Division',qty:'200 Metric Tons',price:'₹18/kg',region:'Maharashtra, Karnataka',deadline:'April 10, 2026',delivery:'ITC Agri Centre, Pune',desc:'ITC requires firm, red-ripe tomatoes for ketchup and sauce production. Brix above 5.0 required. ITC provides free seeds and technical guidance to selected farmers.',quality:['Brix > 5.0','Firm & Red-Ripe','Uniform Size','Disease-Free','No Cracks'],applicants:7},
+  potato:{emoji:'🥔',name:'Chipping Potato',grade:'FC-5 Chipping Variety',company:'PepsiCo India Holdings',qty:'3,000 Metric Tons',price:'₹14/kg',region:'Gujarat, Punjab, West Bengal',deadline:'March 2027',delivery:"PepsiCo Lay's Facility, Kolkata / Channo",desc:"PepsiCo requires FC-5 variety chipping potatoes for Lay's chips. PepsiCo provides certified seeds, technical guidance and a full buyback guarantee. One of India's largest contract farming programs.",quality:['FC-5 Variety Only','Dry Matter > 20%','Reducing Sugar < 0.1%','Uniform Shape','No Greening'],applicants:56},
+  ginger:{emoji:'🫚',name:'Dried Ginger',grade:'Export Grade A',company:'Everest Food Products',qty:'40 Metric Tons',price:'₹85/kg',region:'Kerala, Karnataka, Northeast India',deadline:'July 2026',delivery:'Everest Warehouse, Mumbai',desc:'Everest requires high-quality dried ginger for spice blends. Fresh ginger collected at farm, dried at Everest facility. Farmers get full fresh-produce price.',quality:['High Volatile Oil','Low Fibre','No Mold','Fresh Harvest','Natural Sun-Dried'],applicants:15},
+  maize:{emoji:'🌽',name:'Maize / Corn',grade:'Feed Grade Yellow Maize',company:'Suguna Foods Pvt. Ltd.',qty:'800 Metric Tons',price:'₹19/kg',region:'Andhra Pradesh, Telangana, Karnataka',deadline:'September 2026',delivery:'Suguna Feed Mills, Coimbatore',desc:'Suguna Foods requires yellow maize for poultry feed manufacturing. Moisture below 14% at delivery. Suguna offers advance input support including seeds and fertilizers.',quality:['Moisture < 14%','Yellow Variety','Aflatoxin Free','Min 72% DRC','Foreign Matter < 1%'],applicants:31},
+  mustard:{emoji:'🌻',name:'Mustard Seeds',grade:'Oil Extraction Quality',company:'Adani Wilmar (Fortune)',qty:'600 Metric Tons',price:'₹55/kg',region:'Rajasthan, Madhya Pradesh, UP',deadline:'April 20, 2026',delivery:'Adani Wilmar Plant, Mundra / Bundi',desc:'Adani Wilmar requires yellow mustard seeds for Fortune cooking oil. Oil content minimum 42%. Urgent requirement — MSP plus premium pricing offered to farmers.',quality:['Oil Content ≥ 42%','Moisture < 8%','Clean & Sorted','Low Erucic Acid','Aflatoxin Free'],applicants:9}
 };
 
-function openModal(key) {
-  const c = contracts[key];
-  document.getElementById('modalTitle').textContent = c.title;
-  document.getElementById('modalBody').innerHTML = `
-    <div class="modal-company">${c.company} <span style="color:var(--green-fresh)">✓ Verified</span></div>
+function openModal(id){
+  const c=contracts[id]; if(!c)return;
+  document.getElementById('modalBody').innerHTML=`
+    <div style="font-size:40px;margin-bottom:12px">${c.emoji}</div>
+    <div class="modal-crop-title">${c.name}</div>
+    <div style="font-size:13px;color:var(--text-light);margin-bottom:8px">${c.grade}</div>
+    <div class="modal-company">✔ ${c.company}</div>
     <div class="modal-section-title">Contract Details</div>
     <div class="modal-grid">
-      <div class="modal-item"><div class="modal-item-label">Quantity Required</div><div class="modal-item-val">${c.qty}</div></div>
+      <div class="modal-item"><div class="modal-item-label">Quantity</div><div class="modal-item-val">${c.qty}</div></div>
       <div class="modal-item"><div class="modal-item-label">Price Offered</div><div class="modal-item-val" style="color:var(--green-mid);font-weight:600">${c.price}</div></div>
       <div class="modal-item"><div class="modal-item-label">Region</div><div class="modal-item-val">${c.region}</div></div>
-      <div class="modal-item"><div class="modal-item-label">Delivery By</div><div class="modal-item-val">${c.delivery}</div></div>
+      <div class="modal-item"><div class="modal-item-label">Deadline</div><div class="modal-item-val">${c.deadline}</div></div>
+      <div class="modal-item" style="grid-column:1/-1"><div class="modal-item-label">Delivery Location</div><div class="modal-item-val">${c.delivery}</div></div>
     </div>
-    <div class="modal-section-title">Quality Specifications</div>
-    <div class="modal-desc">📋 ${c.quality}</div>
-    <div class="modal-section-title">About this Contract</div>
+    <div class="modal-section-title">About This Contract</div>
     <div class="modal-desc">${c.desc}</div>
-    <div style="margin-top:16px;padding:14px;background:rgba(82,183,136,0.08);border-radius:10px;font-size:13px;color:var(--text-mid)">
-      ⚠️ <strong>Login required</strong> to apply. <a href="register.html" style="color:var(--green-mid)">Create a free account</a> to start applying.
-    </div>`;
+    <div class="modal-section-title">Quality Requirements</div>
+    <div class="modal-quality">${c.quality.map(q=>`<span class="quality-tag">✓ ${q}</span>`).join('')}</div>
+    <div style="margin-top:18px;font-size:13px;color:var(--text-light)">👥 <strong style="color:var(--text-dark)">${c.applicants}</strong> farmers have applied</div>
+    <button class="modal-apply-btn" onclick="alert('Please login or register to apply for this contract.')">Apply to Supply This Contract →</button>
+  `;
   document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
-function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
-function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); }
-
-function filterContracts() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  document.querySelectorAll('.contract-card').forEach(card => {
-    card.style.display = q === '' || card.textContent.toLowerCase().includes(q) ? '' : 'none';
-  });
-}
-function clearFilters() {
-  document.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
-  document.getElementById('searchInput').value = '';
-  document.querySelectorAll('.contract-card').forEach(c => c.style.display = '');
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
 }
 
-// Chatbot
-document.getElementById('chatFab').addEventListener('click', () => document.getElementById('chatPanel').classList.toggle('open'));
-document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatPanel').classList.remove('open'));
-
-const input = document.getElementById('chatInput');
-const sendBtn = document.getElementById('chatSend');
-const messages = document.getElementById('chatMessages');
-
-async function sendMessage() {
-  const text = input.value.trim(); if (!text) return; input.value = '';
-  messages.innerHTML += `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
-  const typingId = 'typing_' + Date.now();
-  messages.innerHTML += `<div class="msg bot" id="${typingId}"><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
-  messages.scrollTop = messages.scrollHeight;
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: 'You are AgriLink\'s AI assistant on the marketplace page. Help farmers find suitable contracts, understand quality specs, and explain terms. Be concise and practical.',
-        messages: [{ role: 'user', content: text }] })
-    });
-    const data = await res.json();
-    document.getElementById(typingId).remove();
-    messages.innerHTML += `<div class="msg bot"><div class="msg-bubble">${data.content?.[0]?.text || 'Sorry, try again.'}</div></div>`;
-  } catch { document.getElementById(typingId).remove(); messages.innerHTML += `<div class="msg bot"><div class="msg-bubble">Something went wrong. Please try again.</div></div>`; }
-  messages.scrollTop = messages.scrollHeight;
-}
-sendBtn.addEventListener('click', sendMessage);
-input.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
-
-// Pagination buttons
-document.querySelectorAll('.page-btn:not(.arrow)').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-  });
+// Chatbot - handled by api.js
+document.addEventListener('DOMContentLoaded', function() {
+  const msgs = document.getElementById('chatMessages');
+  const inp = document.getElementById('chatInput');
+  const snd = document.getElementById('chatSend');
+  const cls = document.getElementById('chatClose');
+  if (msgs) msgs.id = 'cbMessages';
+  if (inp) inp.id = 'cbInput';
+  if (snd) snd.id = 'cbSend';
+  if (cls) cls.id = 'cbClose';
+  initFloatingChatbot('👋 Looking for the right contract? Tell me your state and crops and I\'ll find the best matches for you!');
 });
 </script>
+<script src="api.js"></script>
 </body>
 </html>
