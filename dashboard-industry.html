@@ -823,29 +823,8 @@
     inp.value = '';
     const msgs = document.getElementById('aiMsgs');
     msgs.innerHTML += `<div style="align-self:flex-end;background:var(--green-mid);color:white;padding:10px 14px;border-radius:12px;font-size:14px;max-width:80%;border-bottom-right-radius:3px">${text}</div>`;
-    const tid = 'ai_' + Date.now();
-    msgs.innerHTML += `<div id="${tid}" style="align-self:flex-start;background:var(--cream);padding:10px 14px;border-radius:12px;font-size:14px;max-width:80%"><div class="typing"><span></span><span></span><span></span></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
-    const user = window.CURRENT_USER || getCurrentUser();
-    const userName = user ? user.full_name : 'Industry Buyer';
-    const userState = user ? (user.state || 'India') : 'India';
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          model:'claude-sonnet-4-20250514', max_tokens:1000,
-          system:`You are AgriLink's AI assistant helping ${userName}, an industry buyer from ${userState}. Help them find farmers, set fair prices, write good contracts, and manage their supply chain. Keep responses practical and concise. Always address them by their first name.`,
-          messages:[{role:'user',content:text}]
-        })
-      });
-      const data = await res.json();
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div style="align-self:flex-start;background:var(--cream);padding:10px 14px;border-radius:12px;font-size:14px;max-width:80%;line-height:1.6">${data.content?.[0]?.text||'Sorry, try again.'}</div>`;
-    } catch {
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div style="align-self:flex-start;background:var(--cream);padding:10px 14px;border-radius:12px;font-size:14px">Something went wrong.</div>`;
-    }
-    msgs.scrollTop = msgs.scrollHeight;
+    await agrilinkChat(text, 'aiMsgs');
   }
   function quickAsk(q) { document.getElementById('aiInp').value = q; sendAI(); }
   document.getElementById('aiInp').addEventListener('keydown', e => { if (e.key==='Enter') sendAI(); });
@@ -859,29 +838,8 @@
     inp.value = '';
     const msgs = document.getElementById('cbMessages');
     msgs.innerHTML += `<div class="cb-msg user"><div class="cb-bubble">${text}</div></div>`;
-    const tid = 'cb_' + Date.now();
-    msgs.innerHTML += `<div class="cb-msg bot" id="${tid}"><div class="cb-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
     msgs.scrollTop = msgs.scrollHeight;
-    const user = window.CURRENT_USER || getCurrentUser();
-    const userName = user ? user.full_name : 'Industry Buyer';
-    const userState = user ? (user.state || 'India') : 'India';
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          model:'claude-sonnet-4-20250514', max_tokens:600,
-          system:`You are AgriLink AI helping ${userName}, an industry buyer from ${userState}. Be concise and professional. Always address them by their first name.`,
-          messages:[{role:'user',content:text}]
-        })
-      });
-      const data = await res.json();
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div class="cb-msg bot"><div class="cb-bubble">${data.content?.[0]?.text||'Sorry, try again.'}</div></div>`;
-    } catch {
-      document.getElementById(tid).remove();
-      msgs.innerHTML += `<div class="cb-msg bot"><div class="cb-bubble">Something went wrong.</div></div>`;
-    }
-    msgs.scrollTop = msgs.scrollHeight;
+    await agrilinkChat(text, 'cbMessages');
   }
   document.getElementById('cbSend').addEventListener('click', sendCb);
   document.getElementById('cbInput').addEventListener('keydown', e => { if (e.key==='Enter') sendCb(); });
